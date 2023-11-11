@@ -1,4 +1,4 @@
-from Producto import Producto
+from producto import Producto
 
 class Donas(Producto):
     def __init__(self, nombre, espacioAlmacenamiento, ingredientesNecesarios, precioBase, ID, peso, chips, cobertura):
