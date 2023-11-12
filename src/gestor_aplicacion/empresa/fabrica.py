@@ -1,3 +1,9 @@
+from src.gestor_aplicacion.empresa.ingrediente import Ingrediente
+from src.gestor_aplicacion.producto.galleta import Galleta
+from src.gestor_aplicacion.producto.pastel_frito import PastelesFritos
+from src.gestor_aplicacion.producto.torta import Tortas
+from src.gestor_aplicacion.producto.dona import Donas
+
 class Fabrica:
     def __init__(self, NIT, direccion, bodega):
         self.NIT = NIT
@@ -47,7 +53,7 @@ class Fabrica:
                         Ingrediente("harina", 5, 1234, 10): 1,
                         Ingrediente("azucar", 3, 1234, 5): 3,
                     }
-                    nuevoProducto = Galletas(nombreProducto, 5, ingredientesGalleta, 20, "dfg123", 3, False, "vainilla")
+                    nuevoProducto = Galleta(nombreProducto, 5, ingredientesGalleta, 20, "dfg123", 3, False, "vainilla")
                     self.bodega.getProductos().append(nuevoProducto)
                     self.bodega.getContabilidadProductos().merge(nombreProducto, 1, int.__add__)
                     self.actualizarContabilidadIngredientes(ingredientesGalleta)

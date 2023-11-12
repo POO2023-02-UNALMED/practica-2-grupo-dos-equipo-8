@@ -1,9 +1,7 @@
 import sys
 sys.path.append('C:/Users/manue/Desktop/Poo/practica-2-grupo-dos-equipo-8/src/gestor_aplicacion')
 
-
-
-from producto import Producto
+from src.gestor_aplicacion.producto.producto import Producto
 
 
 class PastelesFritos(Producto):

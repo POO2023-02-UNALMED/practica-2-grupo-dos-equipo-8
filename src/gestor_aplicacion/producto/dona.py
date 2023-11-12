@@ -1,4 +1,4 @@
-from producto import Producto
+from src.gestor_aplicacion.producto.producto import Producto
 
 class Donas(Producto):
     def __init__(self, nombre, espacioAlmacenamiento, ingredientesNecesarios, precioBase, ID, peso, chips, cobertura):

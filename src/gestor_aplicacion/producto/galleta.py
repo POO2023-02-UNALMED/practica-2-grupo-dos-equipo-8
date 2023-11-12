@@ -1,6 +1,4 @@
-
-
-from producto import Producto
+from src.gestor_aplicacion.producto.producto import Producto
 
 
 class Galleta(Producto):

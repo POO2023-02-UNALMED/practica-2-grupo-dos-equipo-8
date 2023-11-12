@@ -5,10 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b7a1f87e-d8a6-4bda-a6bb-b2248323d1cf" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gestor_aplicacion/empresa/administrador.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gestor_aplicacion/empresa/administrador.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gestor_aplicacion/empresa/ingrediente.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gestor_aplicacion/empresa/ingrediente.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gestor_aplicacion/producto/producto.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gestor_aplicacion/producto/producto.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gestor_aplicacion/empresa/bodega.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gestor_aplicacion/empresa/bodega.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gestor_aplicacion/empresa/fabrica.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gestor_aplicacion/empresa/fabrica.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gestor_aplicacion/producto/dona.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gestor_aplicacion/producto/dona.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gestor_aplicacion/producto/galleta.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gestor_aplicacion/producto/galleta.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gestor_aplicacion/producto/pastel_frito.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gestor_aplicacion/producto/pastel_frito.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gestor_aplicacion/producto/torta.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gestor_aplicacion/producto/torta.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,5 +58,16 @@
       <updated>1699749754734</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
