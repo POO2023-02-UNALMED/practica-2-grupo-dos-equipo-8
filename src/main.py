@@ -1,8 +1,13 @@
 from gestor_aplicacion.empresa.administrador import *
 from gestor_aplicacion.producto.producto import *
+from src.gestor_aplicacion.empresa import bodega, caja, camion, fabrica, administrador
+
 
 scan = input  # En Python, usamos `input` en lugar de `Scanner` para la entrada del usuario
 administrador = Administrador.inicializar()
+
+
+
 
 def imprimir_lista_productos():
     productos = administrador.bodega.productos

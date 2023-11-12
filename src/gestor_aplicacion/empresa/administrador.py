@@ -1,8 +1,8 @@
 import pickle
-from camion import Camion
-from envio import Envio
-from ingrediente import Ingrediente
-from bodega import Bodega
+from src.gestor_aplicacion.empresa.camion import Camion
+from src.gestor_aplicacion.empresa.envio import Envio
+from src.gestor_aplicacion.empresa.ingrediente import Ingrediente
+from src.gestor_aplicacion.empresa.bodega import Bodega
 
 
 

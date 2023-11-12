@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from i_producto_ingrediente import IProductoIngrediente
+from .i_producto_ingrediente import IProductoIngrediente
 
 
 class Producto(IProductoIngrediente):
