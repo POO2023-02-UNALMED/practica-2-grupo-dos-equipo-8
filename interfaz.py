@@ -136,6 +136,14 @@ foto_andres1 = Image.open("foto1_andres.png")
 foto_andres2 = Image.open("foto2_andres.png")
 foto_andres3 = Image.open("foto3_andres.png")
 foto_andres4 = Image.open("foto4_andres.png")
+
+#Imagenes Maria
+foto_maria1 = Image.open("foto1_maria.png")
+foto_maria2 = Image.open("foto2_maria.png")
+foto_maria3 = Image.open("foto3_maria.png")
+foto_maria4 = Image.open("foto4_maria.png")
+
+
 # Cambiar el tamaño de las imágenes (ajustar según sea necesario)
 ancho = 200
 alto = 150
@@ -154,16 +162,21 @@ foto_juan2 = ImageTk.PhotoImage(foto_juan2.resize((ancho, alto)))
 foto_juan3 = ImageTk.PhotoImage(foto_juan3.resize((ancho, alto)))
 foto_juan4 = ImageTk.PhotoImage(foto_juan4.resize((ancho, alto)))
 
+foto_maria1 = ImageTk.PhotoImage(foto_maria1.resize((ancho, alto)))
+foto_maria2 = ImageTk.PhotoImage(foto_maria2.resize((ancho, alto)))
+foto_maria3 = ImageTk.PhotoImage(foto_maria3.resize((ancho, alto)))
+foto_maria4 = ImageTk.PhotoImage(foto_maria4.resize((ancho, alto)))
+
 
 
 # Datos de las biografías
 biografias = [
     {"nombre": "Manuel Zuleta Arango", "correo": "mzueta@unal.edu.co", "cedula": "1001420813",
     "carrera": "Ingeniería de Sistemas", "edad": 21, "semestre": 9},
-    {"nombre": "Andres Guarin Salazar", "correo": "aguarins@unal.edu.co", "cedula": "1037659069",
-    "carrera": "Ciencias de la Computación", "edad": 26, "semestre": 6},
     {"nombre": "Juan Diego Ospina Ocampo", "correo": "jospinaoc@unal.edu.com", "cedula": "1001755818",
     "carrera": "Ciencias de la computación", "edad": 21, "semestre": 7},
+    {"nombre": "Andres Guarin Salazar", "correo": "aguarins@unal.edu.co", "cedula": "1037659069",
+    "carrera": "Ciencias de la Computación", "edad": 26, "semestre": 6},
     {"nombre": "Nombre4 Apellido4", "correo": "correo4@dominio.com", "cedula": "1234567890",
     "carrera": "Ingeniería Industrial", "edad": 23, "semestre": 6}
 ]
@@ -250,7 +263,16 @@ def mostrar_imagenes():
         frame_imagenes.grid_rowconfigure(1, weight=1)
         frame_imagenes.grid_columnconfigure(0, weight=1)
         frame_imagenes.grid_columnconfigure(1, weight=1)
-
+    elif biografia_actual == 3:
+        Label(frame_imagenes, image=foto_maria1, bg="cornsilk1").grid(row=0, column=0, padx=10, pady=20, sticky="nsew")
+        Label(frame_imagenes, image=foto_maria2, bg="cornsilk1").grid(row=0, column=1, padx=10, pady=20, sticky="nsew")
+        Label(frame_imagenes, image=foto_maria3, bg="cornsilk1").grid(row=1, column=0, padx=10, pady=20, sticky="nsew")
+        Label(frame_imagenes, image=foto_maria4, bg="cornsilk1").grid(row=1, column=1, padx=10, pady=20, sticky="nsew")
+        
+        frame_imagenes.grid_rowconfigure(0, weight=1)
+        frame_imagenes.grid_rowconfigure(1, weight=1)
+        frame_imagenes.grid_columnconfigure(0, weight=1)
+        frame_imagenes.grid_columnconfigure(1, weight=1)
 # Inicializar con la primera biografía
 actualizar_biografia()
 
