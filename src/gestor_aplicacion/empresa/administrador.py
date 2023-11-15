@@ -7,12 +7,12 @@ import pickle
 ##from src.gestor_aplicacion.empresa.ingrediente import Ingrediente
 ##from src.gestor_aplicacion.empresa.bodega import Bodega
 
-from ..empresa.caja import Caja
-from ..empresa.camion import Camion
-from ..empresa.envio import Envio
-from ..empresa.fabrica import Fabrica
-from ..empresa.ingrediente import Ingrediente
-from ..empresa.bodega import Bodega
+from gestor_aplicacion.empresa.caja import Caja
+from gestor_aplicacion.empresa.camion import Camion
+from gestor_aplicacion.empresa.envio import Envio
+from gestor_aplicacion.empresa.fabrica import Fabrica
+from gestor_aplicacion.empresa.ingrediente import Ingrediente
+from gestor_aplicacion.empresa.bodega import Bodega
 
 class Administrador:
     def __init__(self, bodega, caja, camiones, fabrica):
