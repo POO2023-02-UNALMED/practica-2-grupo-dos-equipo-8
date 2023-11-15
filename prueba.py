@@ -27,31 +27,26 @@ frame_biografias.grid(column=1, row=0, padx=20, pady=10, sticky="nsew")
 frame_imagenes = Frame(ventana_inicio, bg="cornsilk1", width=300, height=300)
 frame_imagenes.grid(column=1, row=1, padx=20, pady=10, sticky="nsew")
 
-# Imágenes de Manuel
-foto_manuel1 = Image.open("foto1_manuel.png")
-foto_manuel2 = Image.open("foto2_manuel.png")
-foto_manuel3 = Image.open("foto3_manuel.png")
-foto_manuel4 = Image.open("foto4_manuel.png")
+# Frame de inicio con botón
+frame_inicio = Frame(ventana_inicio, width=300, height=300, bg="AntiqueWhite1")
+frame_inicio.grid(column=0, row=1, padx=50, pady=10, sticky="nsew")
 
-# Cambiar el tamaño de las imágenes (ajustar según sea necesario)
-ancho = 200
-alto = 150
-foto_manuel1 = ImageTk.PhotoImage(foto_manuel1.resize((ancho, alto)))
-foto_manuel2 = ImageTk.PhotoImage(foto_manuel2.resize((ancho, alto)))
-foto_manuel3 = ImageTk.PhotoImage(foto_manuel3.resize((ancho, alto)))
-foto_manuel4 = ImageTk.PhotoImage(foto_manuel4.resize((ancho, alto)))
+boton_inicio = Button(frame_inicio, text="Ingresar", bg="AntiqueWhite2")
+boton_inicio.grid(row=3, column=1, sticky="n", padx=125, pady=5)
 
-# Datos de las biografías
-biografias = [
-    {"nombre": "Manuel Zuleta Arango", "correo": "mzueta@unal.edu.co", "cedula": "1001420813",
-     "carrera": "Ingeniería de Sistemas", "edad": 21, "semestre": 9},
-    {"nombre": "Nombre2 Apellido2", "correo": "correo2@dominio.com", "cedula": "0987654321",
-     "carrera": "Ciencias de la Computación", "edad": 22, "semestre": 6},
-    {"nombre": "Nombre3 Apellido3", "correo": "correo3@dominio.com", "cedula": "9876543210",
-     "carrera": "Ingeniería Electrónica", "edad": 24, "semestre": 7},
-    {"nombre": "Nombre4 Apellido4", "correo": "correo4@dominio.com", "cedula": "1234567890",
-     "carrera": "Ingeniería Industrial", "edad": 23, "semestre": 6}
-]
+# Redimensionar imágenes de inicio
+foto_inicio1 = Image.open("foto_inicio1.png").resize((150, 150), Image.ANTIALIAS)
+foto_inicio2 = Image.open("foto_inicio2.png").resize((150, 150), Image.ANTIALIAS)
+foto_inicio3 = Image.open("foto_inicio3.png").resize((150, 150), Image.ANTIALIAS)
+foto_inicio4 = Image.open("foto_inicio4.png").resize((150, 150), Image.ANTIALIAS)
+foto_inicio5 = Image.open("foto_inicio5.png").resize((150, 150), Image.ANTIALIAS)
+
+# Convertir imágenes a formato Tkinter
+foto_inicio1 = ImageTk.PhotoImage(foto_inicio1)
+foto_inicio2 = ImageTk.PhotoImage(foto_inicio2)
+foto_inicio3 = ImageTk.PhotoImage(foto_inicio3)
+foto_inicio4 = ImageTk.PhotoImage(foto_inicio4)
+foto_inicio5 = ImageTk.PhotoImage(foto_inicio5)
 
 # Variable para rastrear la biografía actual
 biografia_actual = 0
