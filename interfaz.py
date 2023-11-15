@@ -42,11 +42,17 @@ def ingresar():
         
         
     def aplicacion():
-        mensaje = "Esta aplicación realiza X, Y, Z."
-        messagebox.showinfo("Información", mensaje)
+        mensaje = ("¡Bienvenido a Deli Horno!\n\n"
+                "Una aplicación de gestión diseñada para panaderías y pastelerías, optimizando la producción, inventario y ventas de productos horneados. Permite gestionar inventarios, tomar pedidos por encargo, ajustar la producción diaria, adaptar precios según tendencias y asignar envíos a camiones de reparto. Utiliza programación orientada a objetos para una operación eficiente y una experiencia de usuario intuitiva. Desde la compra de materias primas hasta la entrega de productos.")
+        messagebox.showinfo("Información de la aplicación", mensaje)
+
     def acercade():
-        pass
-        
+        mensaje = ("¡Conoce a los Creadores de Deli Horno!\n\n"
+                "Manuel Zuleta Arango\n"
+                "Andres Guarin Salazar\n"
+                "Juan Diego Ospina Ocampo\n"
+                "Maria [Apellido completo no proporcionado]")
+        messagebox.showinfo("Creadores", mensaje)
         
     menubar = Menu(ventana_principal)
 
