@@ -162,8 +162,8 @@ biografias = [
     "carrera": "Ingeniería de Sistemas", "edad": 21, "semestre": 9},
     {"nombre": "Andres Guarin Salazar", "correo": "aguarins@unal.edu.co", "cedula": "1037659069",
     "carrera": "Ciencias de la Computación", "edad": 26, "semestre": 6},
-    {"nombre": "Nombre3 Apellido3", "correo": "correo3@dominio.com", "cedula": "9876543210",
-    "carrera": "Ingeniería Electrónica", "edad": 24, "semestre": 7},
+    {"nombre": "Juan Diego Ospina Ocampo", "correo": "jospinaoc@unal.edu.com", "cedula": "1001755818",
+    "carrera": "Ciencias de la computación", "edad": 21, "semestre": 7},
     {"nombre": "Nombre4 Apellido4", "correo": "correo4@dominio.com", "cedula": "1234567890",
     "carrera": "Ingeniería Industrial", "edad": 23, "semestre": 6}
 ]
