@@ -1,4 +1,6 @@
-from src.gestor_aplicacion.producto.producto import Producto
+##from src.gestor_aplicacion.producto.producto import Producto
+from gestor_aplicacion.producto.producto import Producto
+
 
 class Tortas(Producto):
     def __init__(self, nombre, espacioAlmacenamiento, hashMap, precioBase, ID, peso, porciones, cobertura):

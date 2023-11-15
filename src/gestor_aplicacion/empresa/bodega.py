@@ -1,5 +1,7 @@
-from src.gestor_aplicacion.empresa.caja import Caja
-from src.gestor_aplicacion.empresa.ingrediente import Ingrediente
+##from src.gestor_aplicacion.empresa.caja import Caja
+##from src.gestor_aplicacion.empresa.ingrediente import Ingrediente
+from gestor_aplicacion.empresa.caja import Caja
+from gestor_aplicacion.empresa.ingrediente import Ingrediente
 
 
 class Bodega:
