@@ -133,8 +133,8 @@ def interfaz():
     biografias = [
         {"nombre": "Manuel Zuleta Arango", "correo": "mzueta@unal.edu.co", "cedula": "1001420813",
         "carrera": "Ingeniería de Sistemas", "edad": 21, "semestre": 9},
-        {"nombre": "Nombre2 Apellido2", "correo": "correo2@dominio.com", "cedula": "0987654321",
-        "carrera": "Ciencias de la Computación", "edad": 22, "semestre": 6},
+        {"nombre": "Andres Guarin Salazar", "correo": "aguarins@unal.edu.co", "cedula": "1037659069",
+        "carrera": "Ciencias de la Computación", "edad": 26, "semestre": 6},
         {"nombre": "Nombre3 Apellido3", "correo": "correo3@dominio.com", "cedula": "9876543210",
         "carrera": "Ingeniería Electrónica", "edad": 24, "semestre": 7},
         {"nombre": "Nombre4 Apellido4", "correo": "correo4@dominio.com", "cedula": "1234567890",
