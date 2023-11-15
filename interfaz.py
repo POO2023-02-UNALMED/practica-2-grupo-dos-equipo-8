@@ -26,6 +26,7 @@ frame_imagenes = Frame(ventana_inicio, bg="cornsilk1", width=300, height=300)
 frame_imagenes.grid(column=1, row=1, padx=20, pady=10, sticky="nsew")
 
 
+
 def ingresar():
     ventana_inicio.withdraw()
     ventana_principal=Tk()
@@ -93,6 +94,9 @@ frame_inicio.grid(column=0, row=1, padx=50, pady=10, sticky="nsew")
 boton_inicio=Button(frame_inicio, text="INGRESAR",bg="AntiqueWhite2",width=30,height=5,font=("Arial",10,"bold"),bd=5,relief="raised",command=ingresar)
 boton_inicio.place(relx=0.1,rely=0.6)
 
+
+
+
 ancho_inicio = 70
 alto_inicio = 70
 foto_inicio1 = ImageTk.PhotoImage(Image.open("foto_inicio1.png").resize((250, 100)))
@@ -106,6 +110,22 @@ label_inicio2 = Label(frame_inicio, image=foto_inicio2)
 label_inicio3 = Label(frame_inicio, image=foto_inicio3)
 label_inicio4 = Label(frame_inicio, image=foto_inicio4)
 label_inicio5 = Label(frame_inicio, image=foto_inicio5)
+# Mensaje
+mensaje = Label(frame_inicio, text="", font=("Arial", 12,"bold"), bg="bisque2",justify="center",wraplength="400")
+mensaje.place(relx=0.1, rely=0.3)
+
+def mostrar_mensaje(event):
+    label_inicio1.place_forget()
+    mensaje.config(text="´´Delicias que endulzan tu día,\nnuestro arte en cada bocado.´´")
+#def volver_a_aparecer(event): GENERA UN ERROR #
+ #   label_inicio1.place(relx=0.1, rely=0.3)
+  #  mensaje.config(text="")
+#Cuando entre a la imagen haga un cambio
+label_inicio1.bind("<Enter>", mostrar_mensaje)
+#label_inicio1.bind("<Leave>", volver_a_aparecer)
+
+
+
 
 label_inicio1.place(relx=0.1, rely=0.3)
 label_inicio2.place(relx=0, rely=0)
