@@ -203,8 +203,8 @@ biografias = [
     "carrera": "Ciencias de la computación", "edad": 21, "semestre": 7},
     {"nombre": "Andres Guarin Salazar", "correo": "aguarins@unal.edu.co", "cedula": "1037659069",
     "carrera": "Ciencias de la Computación", "edad": 26, "semestre": 6},
-    {"nombre": "Nombre4 Apellido4", "correo": "correo4@dominio.com", "cedula": "1234567890",
-    "carrera": "Ingeniería Industrial", "edad": 23, "semestre": 6}
+    {"nombre": "Maria Isabel Quiroz", "correo": "mquirozr@unal.edu.co", "cedula": "1010028863",
+    "carrera": "Ciencias de la computación", "edad": 22, "semestre": 5}
 ]
 
 # Variable para rastrear la biografía actual
