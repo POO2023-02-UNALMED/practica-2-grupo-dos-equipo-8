@@ -1,7 +1,7 @@
 from tkinter import * 
 from tkinter import messagebox
 from PIL import Image, ImageTk
-
+from field_frame import FieldFrame
 
 
 ventana_inicio = Tk()
@@ -39,7 +39,9 @@ def ingresar():
         ventana_principal.destroy()
         ventana_inicio.deiconify()
         
-        
+    def funcionalidad1():
+        FieldFrame(ventana_principal,"funcionalidad 1")
+
         
     def aplicacion():
         mensaje = ("¡Bienvenido a Deli Horno!\n\n"
@@ -73,7 +75,7 @@ def ingresar():
     menubar.add_cascade(label="Ayuda", menu=menu_ayuda)
     
     #Menu Procesos y consultas
-    menu_procesos.add_command(label="funcionalidad 1")
+    menu_procesos.add_command(label="funcionalidad 1",command=funcionalidad1)
     menu_procesos.add_command(label="funcionalidad 2")
     menu_procesos.add_command(label="funcionalidad 3")
     menu_procesos.add_command(label="funcionalidad 4")
