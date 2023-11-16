@@ -1,5 +1,3 @@
-##from src.gestor_aplicacion.empresa.caja import Caja
-##from src.gestor_aplicacion.empresa.ingrediente import Ingrediente
 from gestor_aplicacion.empresa.caja import Caja
 from gestor_aplicacion.empresa.ingrediente import Ingrediente
 
@@ -50,7 +48,7 @@ class Bodega:
     def pedirCantidadIngrediente(self, opcion, cantidadPedida, administrador):
         try:
             ingredienteSeleccionado = Ingrediente.getIngredientesDisponibles()[opcion - 1]
-            nombreIngrediente = ingredienteSeleccionado.getNombre()
+            nombreIngrediente, precioIngrediente = ingredienteSeleccionado.getNombre(), ingredienteSeleccionado.getPrecio()
 
             if nombreIngrediente not in self.contabilidadIngredientes:
                 self.contabilidadIngredientes[nombreIngrediente] = 0
@@ -60,13 +58,16 @@ class Bodega:
                 self.ingredientes.append(nuevoIngrediente)
                 self.contabilidadIngredientes[nombreIngrediente] += 1
 
-            administrador.getCaja().restarDinero(ingredienteSeleccionado.getPrecio() * cantidadPedida)
+            administrador.getCaja().restarDinero(precioIngrediente * cantidadPedida)
             mensaje = "Se ha realizado el pedido con éxito.\n"
             mensaje += f"Nueva cantidad de {nombreIngrediente}: {self.contabilidadIngredientes[nombreIngrediente]}"
             return mensaje
 
-        except Exception:
-            return "Ha ocurrido un error, inténtelo de nuevo más tarde."
+        except IndexError:
+            return "Opción no válida. Seleccione un ingrediente disponible."
+        except Exception as e:
+            return f"Ha ocurrido un error: {e}. Inténtelo de nuevo más tarde."
+
 
     def mostrarIngredientesEscasos(self):
         resultado = "Ingredientes escasos:\n"

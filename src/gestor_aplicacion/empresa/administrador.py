@@ -1,12 +1,4 @@
 import pickle
-
-##from src.gestor_aplicacion.empresa import caja
-##from src.gestor_aplicacion.empresa.camion import Camion
-##from src.gestor_aplicacion.empresa.envio import Envio
-##from src.gestor_aplicacion.empresa.fabrica import Fabrica
-##from src.gestor_aplicacion.empresa.ingrediente import Ingrediente
-##from src.gestor_aplicacion.empresa.bodega import Bodega
-
 from gestor_aplicacion.empresa.caja import Caja
 from gestor_aplicacion.empresa.camion import Camion
 from gestor_aplicacion.empresa.envio import Envio
@@ -48,6 +40,8 @@ class Administrador:
         except FileNotFoundError:
             administrador = Administrador.crearTodo()
             return administrador
+        except Exception as e:
+            print(f"Error al inicializar: {e}")
 
     @staticmethod
     def crearTodo():
