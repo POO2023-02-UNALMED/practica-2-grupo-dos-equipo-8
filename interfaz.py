@@ -51,7 +51,7 @@ def ingresar():
                 "Manuel Zuleta Arango\n"
                 "Andres Guarin Salazar\n"
                 "Juan Diego Ospina Ocampo\n"
-                "Maria [Apellido completo no proporcionado]")
+                "Maria Isabel Quiroz")
         messagebox.showinfo("Creadores", mensaje)
         
     menubar = Menu(ventana_principal)
@@ -87,21 +87,12 @@ def ingresar():
     ventana_principal.config(menu=menubar)
     ventana_principal.mainloop()
 
-
-
-
-
-
-
 #Frame de inicio
 frame_inicio = Frame(ventana_inicio, width=100, height=10,bg="bisque2")
 frame_inicio.grid(column=0, row=1, padx=50, pady=10, sticky="nsew")
 
 boton_inicio=Button(frame_inicio, text="INGRESAR",bg="AntiqueWhite2",width=30,height=5,font=("Arial",10,"bold"),bd=5,relief="raised",command=ingresar)
 boton_inicio.place(relx=0.1,rely=0.6)
-
-
-
 
 ancho_inicio = 70
 alto_inicio = 70
@@ -130,18 +121,11 @@ def mostrar_mensaje(event):
 label_inicio1.bind("<Enter>", mostrar_mensaje)
 #label_inicio1.bind("<Leave>", volver_a_aparecer)
 
-
-
-
 label_inicio1.place(relx=0.1, rely=0.3)
 label_inicio2.place(relx=0, rely=0)
 label_inicio3.place(relx=0.8, rely=0)
 label_inicio4.place(relx=0.3, rely=0)
 label_inicio5.place(relx=0.5, rely=0)
-
-
-
-
 
 # Imágenes de Manuel
 foto_manuel1 = Image.open("foto1_manuel.png")
@@ -169,7 +153,6 @@ foto_maria2 = Image.open("foto2_maria.png")
 foto_maria3 = Image.open("foto3_maria.png")
 foto_maria4 = Image.open("foto4_maria.png")
 
-
 # Cambiar el tamaño de las imágenes (ajustar según sea necesario)
 ancho = 200
 alto = 150
@@ -192,8 +175,6 @@ foto_maria1 = ImageTk.PhotoImage(foto_maria1.resize((ancho, alto)))
 foto_maria2 = ImageTk.PhotoImage(foto_maria2.resize((ancho, alto)))
 foto_maria3 = ImageTk.PhotoImage(foto_maria3.resize((ancho, alto)))
 foto_maria4 = ImageTk.PhotoImage(foto_maria4.resize((ancho, alto)))
-
-
 
 # Datos de las biografías
 biografias = [
