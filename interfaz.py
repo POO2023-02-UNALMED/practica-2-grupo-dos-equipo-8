@@ -34,13 +34,101 @@ def ingresar():
     ventana_principal.geometry("1500x1000")
 
     
+    #Funcioon para error al ejecutar varias veces
+    def cerrarVentana():
+        ventana_inicio.destroy()
+        ventana_principal.destroy()
+    #Asociamos la funcion anterior a la "X"
+    ventana_principal.protocol("WM_DELETE_WINDOW",cerrarVentana)
+
     #Funciones
     def salir_principal():
         ventana_principal.destroy()
         ventana_inicio.deiconify()
-        
+
+
+    #Frame del nombre
+    frame_nombre = Frame(ventana_principal) 
+    frame_nombre.pack(pady=50)
+    # Ajustamos la grilla del frame_nombre
+    frame_nombre.grid_rowconfigure(0, weight=1)
+    frame_nombre.grid_columnconfigure(0, weight=1)
+
+    # Creamos el label y lo centramos en el frame_nombre
+    label_nombre = Label(frame_nombre, text="",font=("Arial",25,"bold"))
+    label_nombre.grid(row=0, column=0, sticky="n")  # Sticky north (arriba)
+
+
+
+    #Frame de descripción
+    frame_descripción = Frame(ventana_principal) 
+    frame_descripción.pack(pady=50)
+    # Ajustamos la grilla del frame_nombre
+    frame_descripción.grid_rowconfigure(0, weight=1)
+    frame_descripción.grid_columnconfigure(0, weight=1)
+
+    # Creamos el label y lo centramos en el frame_nombre
+    label_descripción = Label(frame_nombre, text="",font=("Arial",12,"bold"))
+    label_descripción.grid(row=1, column=0, sticky="n",pady=50)  # Sticky north (arriba) 
+
+    
+    
+    
+
     def funcionalidad1():
-        FieldFrame(ventana_principal,"funcionalidad 1")
+        label_nombre.config(text="Compra de materia prima",borderwidth=2,relief="solid")
+        label_descripción.config(text=(
+            "La materia prima es escencial para la producción díaria y el funcionamiento de la empresa, para esto se verificará la disponibilidad en la bodega" 
+            +"\n  las cantidades necesarias, verifica fondos y de todo estar bien realiza la compra"),borderwidth=2,relief="solid")
+        
+
+        
+
+    
+    def funcionalidad2():
+        label_nombre.config(text="Venta por encargo",borderwidth=2,relief="solid")
+        label_descripción.config(text=("Para definir ventas por encargo, se debe tener en cuenta que una venta por encargo es creada por el administrado"
+                                 +"\n segun una peticion previa del cliente , los productos serán encargados a bodega y los asignará a un envio especifico"),borderwidth=2,relief="solid")
+
+        
+    
+    def funcionalidad3():
+        label_nombre.config(text="Cambiar lista de producción diaría",borderwidth=2,relief="solid")
+        label_descripción.config(text=( "permite al administrador actualizar la producción diaria de productos. Tras ingresar la cantidad deseada,"+
+                                       "\n se verifica si la bodega tiene espacio suficiente. Se ajustan los requerimientos de producción y precios,"+
+                                       "\n luego se inicia una tanda de producción identificada por un código. Si hay espacio, se añaden los productos."+
+                                       "\n Si la bodega está llena, se detiene la producción y se sugiere enviarlos a otra bodega con capacidad."+
+                                       "\n Esto asegura que la producción se ajuste al espacio disponible y evita interrupciones."),borderwidth=2,relief="solid")
+        
+    
+    def funcionalidad4():
+        label_nombre.config(text="Agregar producto",borderwidth=2,relief="solid")
+        label_descripción.config(text=( "La opción permite agregar ingredientes, elegir ingredientes existentes, y crear un nuevo producto con ellos."+
+                                       "\n Si se agregan ingredientes nuevos, se detalla su información; luego se eligen y cuantifican al menos 2 ingredientes existentes."+
+                                       "\n Tras esta selección, se define el nuevo producto con su información detallada."),borderwidth=2,relief="solid")
+        
+        
+        
+    def funcionalidad5():
+        label_nombre.config(text="Eliminar producto",borderwidth=2,relief="solid")
+        label_descripción.config(text=( "La máquina muestra los productos disponibles con sus detalles. El cliente escribe el nombre del producto a eliminar y confirma la acción."+
+                                       "\n ¨¨No¨¨ cancela la solicitud, mientras que ¨¨Sí¨¨ elimina el producto."+
+                                       "\n Si el nombre ingresado no coincide, se muestra un mensaje de error y "
+                                       "finaliza el proceso de eliminación del producto."),borderwidth=2,relief="solid")
+        
+
+    def funcionalidad6():
+        label_nombre.config(text="Asignar envio y/o camion",borderwidth=2,relief="solid")
+        label_descripción.config(text=( "El administrador asigna un envío a un camión disponible verificando su capacidad."+
+                                       "\n Se muestran envíos pendientes y camiones con espacio suficiente."+
+                                       "\n Tras elegir un camión, se reduce su capacidad según el envío asignado, dejando espacio"+
+                                       "\n adicional si se decide no ocupar todo. El camión se despacha y el envío se elimina de la lista."),borderwidth=2,relief="solid")
+
+    def funcionalidad7():
+        label_nombre.config(text="Cambiar la producción y/o ventas",borderwidth=2,relief="solid")
+        label_descripción.config(text=( "El administrador visualiza la producción y puede ajustar precios y producción de productos."+
+                                       "\n Puede reducir un 50% el precio de un artículo menos vendido y modificar la producción en un 15% menos si tiene baja venta o un 30% menos si tiene alta venta,"+
+                                       "\n basado en su historial. Estos cambios se reflejan en la base de datos al confirmar la modificación."),borderwidth=2,relief="solid")
 
         
     def aplicacion():
@@ -55,7 +143,9 @@ def ingresar():
                 "Juan Diego Ospina Ocampo\n"
                 "Maria Isabel Quiroz")
         messagebox.showinfo("Creadores", mensaje)
-        
+    
+
+
     menubar = Menu(ventana_principal)
 
     # Menú Archivo
@@ -76,10 +166,12 @@ def ingresar():
     
     #Menu Procesos y consultas
     menu_procesos.add_command(label="funcionalidad 1",command=funcionalidad1)
-    menu_procesos.add_command(label="funcionalidad 2")
-    menu_procesos.add_command(label="funcionalidad 3")
-    menu_procesos.add_command(label="funcionalidad 4")
-    menu_procesos.add_command(label="funcionalidad 5")
+    menu_procesos.add_command(label="funcionalidad 2",command=funcionalidad2)
+    menu_procesos.add_command(label="funcionalidad 3",command=funcionalidad3)
+    menu_procesos.add_command(label="funcionalidad 4",command=funcionalidad4)
+    menu_procesos.add_command(label="funcionalidad 5",command=funcionalidad5)
+    menu_procesos.add_command(label="funcionalidad 6",command=funcionalidad6)
+    menu_procesos.add_command(label="funcionalidad 7",command=funcionalidad7)
     
     
     #Menu ayuda
@@ -116,12 +208,12 @@ mensaje.place(relx=0.1, rely=0.3)
 def mostrar_mensaje(event):
     label_inicio1.place_forget()
     mensaje.config(text="´´Delicias que endulzan tu día,\nnuestro arte en cada bocado.´´")
-#def volver_a_aparecer(event): GENERA UN ERROR #
- #   label_inicio1.place(relx=0.1, rely=0.3)
-  #  mensaje.config(text="")
+def volver_a_aparecer(event): 
+    label_inicio1.place(relx=0.1, rely=0.3)
+    mensaje.config(text="")
 #Cuando entre a la imagen haga un cambio
-label_inicio1.bind("<Enter>", mostrar_mensaje)
-#label_inicio1.bind("<Leave>", volver_a_aparecer)
+frame_inicio.bind("<Enter>", mostrar_mensaje)
+frame_inicio.bind("<Leave>", volver_a_aparecer)
 
 label_inicio1.place(relx=0.1, rely=0.3)
 label_inicio2.place(relx=0, rely=0)
@@ -213,7 +305,8 @@ def actualizar_biografia():
 
     biografia = crear_seccion_biografia(frame_biografias, nombre, correo, cedula, carrera, edad, semestre)
     biografia.place(relx=0.5, rely=0.5, anchor="center")
-    biografia.bind("<Button-1>", lambda event: cambiar_biografia())
+    frame_biografias.bind("<Button-1>", lambda event: cambiar_biografia())
+    
 
     # Mostrar las imágenes correspondientes en el frame_imagenes
     mostrar_imagenes()
@@ -231,6 +324,8 @@ def crear_seccion_biografia(frame, nombre, correo, cedula, carrera, edad, semest
     Label(seccion, text=carrera, bg="LightPink2", font=("Arial", 12)).grid(row=2, column=1, sticky="w")
     Label(seccion, text=str(edad), bg="LightPink2", font=("Arial", 12)).grid(row=3, column=1, sticky="w")
     Label(seccion, text=str(semestre), bg="LightPink2", font=("Arial", 12)).grid(row=4, column=1, sticky="w")
+    seccion.bind("<Button-1>", lambda event: cambiar_biografia())
+
     return seccion
 
 # Función para mostrar las imágenes en el frame_imagenes
