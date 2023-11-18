@@ -1,14 +1,13 @@
 import pickle
-from .caja import Caja
-from .camion import Camion
-from .envio import Envio
-from .fabrica import Fabrica 
-from .ingrediente import Ingrediente
-from .bodega import Bodega
-from ..producto.torta import Tortas
-from ..producto.pastel_frito import PastelesFritos
-from ..producto.dona import Donas
-
+from gestor_aplicacion.empresa.caja import Caja
+from gestor_aplicacion.empresa.camion import Camion
+from gestor_aplicacion.empresa.envio import Envio
+from gestor_aplicacion.empresa.fabrica import Fabrica
+from gestor_aplicacion.empresa.ingrediente import Ingrediente
+from gestor_aplicacion.empresa.bodega import Bodega
+from gestor_aplicacion.producto.torta import Tortas
+from gestor_aplicacion.producto.pastel_frito import PastelesFritos
+from gestor_aplicacion.producto.dona import Donas
 
 
 class Administrador:
@@ -65,8 +64,8 @@ class Administrador:
         ingredientes_torta = {}  
 
         # Crear instancias de los ingredientes
-        harina = Ingrediente("harina")
-        azucar = Ingrediente("azúcar")
+        harina = Ingrediente("harina", 5, 1234, 10)
+        azucar = Ingrediente("azúcar", 3, 1234, 5)
 
         # Agregar los ingredientes al diccionario de ingredientes de la torta
         ingredientes_torta[harina] = 1

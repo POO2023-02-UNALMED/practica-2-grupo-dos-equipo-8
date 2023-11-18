@@ -1,5 +1,5 @@
-from .caja import Caja
-from .ingrediente import Ingrediente
+from gestor_aplicacion.empresa.caja import Caja
+from gestor_aplicacion.empresa.ingrediente import Ingrediente
 
 
 class Bodega:
