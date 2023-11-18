@@ -1,6 +1,6 @@
 import sys
 # Agregar la ruta del directorio 'src' al principio de sys.path
-sys.path.insert(0, './src') 
+sys.path.insert(0, './src')
 
 from gestor_aplicacion.empresa.envio import Envio
 from gestor_aplicacion.empresa.ingrediente import Ingrediente
