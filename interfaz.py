@@ -13,7 +13,7 @@ ventana_inicio.iconphoto(True,icono)
 frame_bienvenida = Frame(ventana_inicio, width=100, height=100)
 frame_bienvenida.grid(column=0, row=0, padx=50, pady=10, sticky="nsew")
 
-imagen_bienvenida = PhotoImage(file="bienvenida.png")
+imagen_bienvenida = PhotoImage(file="assets/bienvenida.png")
 label_imagen = Label(frame_bienvenida, image=imagen_bienvenida)
 label_imagen.grid(row=0, column=0, sticky="nsew")
 
