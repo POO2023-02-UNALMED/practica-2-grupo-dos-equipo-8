@@ -1,5 +1,8 @@
 import sys
 
+from src.gestor_aplicacion.empresa.envio import Envio
+from src.gestor_aplicacion.empresa.ingrediente import Ingrediente
+
 # Agregar la ruta del directorio 'src' al principio de sys.path
 sys.path.insert(0, 'C:/Users/manue/Desktop/Poo/practica-2-grupo-dos-equipo-8/src')
 ##from gestor_aplicacion.empresa.administrador import *
