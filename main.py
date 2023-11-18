@@ -47,12 +47,12 @@ def compra_materia_prima_ui():
             print(Ingrediente.obtener_lista_ingredientes())
             opcion = int(scan())
 
-            if opcion < 1 or opcion > len(Ingrediente.get_ingredientes_disponibles()):
+            if opcion < 1 or opcion > len(Ingrediente.ingredientes_disponibles()):
                 print("Opción no válida. Seleccione un número válido.")
                 return
 
             # Solicitar la cantidad deseada
-            nombre_ingrediente = Ingrediente.get_ingredientes_disponibles()[opcion - 1].nombre
+            nombre_ingrediente = Ingrediente.ingredientes_disponibles()[opcion - 1].nombre
             print(f"¿Cuántos {nombre_ingrediente} desea pedir?")
             cantidad_pedida = int(scan())
 
@@ -78,7 +78,7 @@ def venta_por_encargo_ui():
 
     while seleccionar_otro_producto:
         # Mostrar la lista de productos disponibles
-        print(administrador.bodega.mostrar_productos())
+        print(administrador.bodega.mostrarProductos())
 
         # Pedir al cliente que elija un producto
         print("Elija un producto ingresando el número correspondiente: ")

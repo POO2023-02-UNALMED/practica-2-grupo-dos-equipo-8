@@ -36,7 +36,7 @@ class Ingrediente(IProductoIngrediente):
         numeracion = 1
 
         for ingrediente in Ingrediente.ingredientes_disponibles:
-            resultado += f"{numeracion}. {ingrediente.nombre} - precio: ${ingrediente.precio} - Espacio de almacenamiento: {ingrediente.espacioAlmacenamiento}\n"
+            resultado += f"{numeracion}. {ingrediente.nombre} - precio: ${ingrediente.precio} - Espacio de almacenamiento: {ingrediente.espacio_almacenamiento}\n"
             numeracion += 1
 
         return resultado
