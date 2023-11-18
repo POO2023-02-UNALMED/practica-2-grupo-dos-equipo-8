@@ -1,5 +1,3 @@
-
-
 ##from src.gestor_aplicacion.producto.i_producto_ingrediente import IProductoIngrediente
 from gestor_aplicacion.producto.i_producto_ingrediente import IProductoIngrediente
 
