@@ -13,8 +13,8 @@ from gestor_aplicacion.producto.producto import Producto
 
 
 scan = input  # En Python, usamos `input` en lugar de `Scanner` para la entrada del usuario
-administrador = Administrador.inicializar()
 
+administrador = Administrador.crear_todo()
 
 
 
@@ -129,15 +129,22 @@ def cambiar_lista_produccion_diaria_ui():
         except ValueError:
             print("Asegúrese de ingresar números enteros separados por espacios.")
 
+# Asegúrate de que la función scan() esté definida
+def scan():
+    return input()
+
 # Bucle principal
 while True:
     print("Menú de opciones:")
-    print("1. Imprimir lista de productos")
-    print("2. Compra de materia prima")
-    print("3. Venta por encargo")
-    print("4. Cambiar lista de producción diaria")
-    print("5. Salir")
-    print("Seleccione una opción (1/2/3/4/5): ")
+    print("1. Compra de materia prima")
+    print("2. Venta por encargo")
+    print("3. Cambiar lista de producción diaria")
+    print("4. Agregar Producto") 
+    print("5. Eliminar producto")
+    print("6. Asignar Envio y Camion")
+    print("7. cambiar producción y/o precio de un producto")
+    print("8. Salir")
+    print("Seleccione una opción (1/2/3/4/5/6/7/8): ")
     opcion = int(scan())
 
     if opcion == 1:
@@ -148,8 +155,4 @@ while True:
         venta_por_encargo_ui()
     elif opcion == 4:
         cambiar_lista_produccion_diaria_ui()
-    elif opcion == 5:
-        print("Gracias por usar el sistema. Hasta luego.")
-        break
-    else:
-        print("Opción no válida. Seleccione un número válido.")
+    # Asegúrate de que las funciones para las opciones 5, 6, 7 y 8 estén definidas
