@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from PIL import Image, ImageTk
 from field_frame import FieldFrame
-
+from tkinter import ttk
 
 ventana_inicio = Tk()
 ventana_inicio.geometry("1500x1000")
@@ -33,6 +33,35 @@ def ingresar():
     ventana_principal.title("DelHorno Administrator")
     ventana_principal.geometry("1500x1000")
 
+    #Clase FieldFrame   
+    class FieldFrame(Frame):
+        def __init__(self,criterio,criterios,valor_inicial,permitir_cambios):
+            #Frame dialogos
+            frame_dialogo = Frame(ventana_principal,relief="solid",borderwidth=2) 
+            frame_dialogo.pack(pady=50)
+            # Ajustamos la grilla del frame_nombre
+            frame_dialogo.grid_rowconfigure(0, weight=1)
+            frame_dialogo.grid_columnconfigure(0, weight=1)
+            self.permitir_cambios=permitir_cambios
+            self.criterio=criterio
+            label_petición=Label(frame_dialogo,text=criterio)
+            comobo_box=ttk.Combobox(frame_dialogo,values=criterios)
+            comobo_box.set(valor_inicial)
+            def enviar():
+                if self.permitir_cambios==True:
+                    respuesta=comobo_box.get()
+                    comobo_box.config(state="disabled")
+                    self.permitir_cambios=False
+                    return respuesta
+                
+            boton_confirmación=Button(frame_dialogo,text="Enviar",command=enviar)
+
+            label_petición.grid(row=0,column=0,padx=10,pady=50)
+            comobo_box.grid(row=0,column=1,padx=10,pady=50)
+            boton_confirmación.grid(row=0,column=2,padx=10,pady=50)
+            
+
+
     
     #Funcioon para error al ejecutar varias veces
     def cerrarVentana():
@@ -58,6 +87,8 @@ def ingresar():
     label_nombre = Label(frame_nombre, text="",font=("Arial",25,"bold"))
     label_nombre.grid(row=0, column=0, sticky="n")  # Sticky north (arriba)
 
+    
+
 
 
     #Frame de descripción
@@ -80,6 +111,7 @@ def ingresar():
         label_descripción.config(text=(
             "La materia prima es escencial para la producción díaria y el funcionamiento de la empresa, para esto se verificará la disponibilidad en la bodega" 
             +"\n  las cantidades necesarias, verifica fondos y de todo estar bien realiza la compra"),borderwidth=2,relief="solid")
+        FieldFrame("prueba",[1,2,3],"valor predeterminado",True)
         
 
         

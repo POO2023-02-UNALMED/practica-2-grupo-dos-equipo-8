@@ -45,13 +45,9 @@ class Administrador:
 
     @staticmethod
     def crearTodo():
-        # Creación de objetos y datos iniciales
-        # ...
-
         bodega = Bodega("ABC123", productosInicialesBodega1, 1000, ingredientesInicialeBodega, productosIniciales, ingredientesIniciales)
         fabrica = Fabrica("CBS321", "CRR52#75", bodega)
-        # Inicialización de otros objetos y datos
-        # ...
+        
 
         administrador = Administrador(bodega, caja, Camion.getCamiones(), fabrica)
         return administrador
