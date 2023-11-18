@@ -7,7 +7,7 @@ from field_frame import FieldFrame
 ventana_inicio = Tk()
 ventana_inicio.geometry("1500x1000")
 ventana_inicio.title("Pasteleria DeliHorno")
-icono=PhotoImage(file="icono.png")
+icono=PhotoImage(file="assets/icono.png")
 ventana_inicio.iconphoto(True,icono)
 # Frame de bienvenida
 frame_bienvenida = Frame(ventana_inicio, width=100, height=100)
@@ -190,11 +190,11 @@ boton_inicio.place(relx=0.1,rely=0.6)
 
 ancho_inicio = 70
 alto_inicio = 70
-foto_inicio1 = ImageTk.PhotoImage(Image.open("foto_inicio1.png").resize((250, 100)))
-foto_inicio2 = ImageTk.PhotoImage(Image.open("foto_inicio2.png").resize((ancho_inicio, alto_inicio)))
-foto_inicio3 = ImageTk.PhotoImage(Image.open("foto_inicio3.png").resize((ancho_inicio, alto_inicio)))
-foto_inicio4 = ImageTk.PhotoImage(Image.open("foto_inicio4.png").resize((ancho_inicio, alto_inicio)))
-foto_inicio5 = ImageTk.PhotoImage(Image.open("foto_inicio5.png").resize((ancho_inicio, alto_inicio)))
+foto_inicio1 = ImageTk.PhotoImage(Image.open("assets/foto_inicio1.png").resize((250, 100)))
+foto_inicio2 = ImageTk.PhotoImage(Image.open("assets/foto_inicio2.png").resize((ancho_inicio, alto_inicio)))
+foto_inicio3 = ImageTk.PhotoImage(Image.open("assets/foto_inicio3.png").resize((ancho_inicio, alto_inicio)))
+foto_inicio4 = ImageTk.PhotoImage(Image.open("assets/foto_inicio4.png").resize((ancho_inicio, alto_inicio)))
+foto_inicio5 = ImageTk.PhotoImage(Image.open("assets/foto_inicio5.png").resize((ancho_inicio, alto_inicio)))
 
 label_inicio1 = Label(frame_inicio, image=foto_inicio1)
 label_inicio2 = Label(frame_inicio, image=foto_inicio2)
@@ -222,30 +222,30 @@ label_inicio4.place(relx=0.3, rely=0)
 label_inicio5.place(relx=0.5, rely=0)
 
 # Imágenes de Manuel
-foto_manuel1 = Image.open("foto1_manuel.png")
-foto_manuel2 = Image.open("foto2_manuel.png")
-foto_manuel3 = Image.open("foto3_manuel.png")
-foto_manuel4 = Image.open("foto4_manuel.png")
+foto_manuel1 = Image.open("assets/foto1_manuel.png")
+foto_manuel2 = Image.open("assets/foto2_manuel.png")
+foto_manuel3 = Image.open("assets/foto3_manuel.png")
+foto_manuel4 = Image.open("assets/foto4_manuel.png")
 
 # Imagenes Juan
 
-foto_juan1 = Image.open("foto1_juan.png")
-foto_juan2 = Image.open("foto2_juan.png")
-foto_juan3 = Image.open("foto3_juan.png")
-foto_juan4 = Image.open("foto4_juan.png")
+foto_juan1 = Image.open("assets/foto1_juan.png")
+foto_juan2 = Image.open("assets/foto2_juan.png")
+foto_juan3 = Image.open("assets/foto3_juan.png")
+foto_juan4 = Image.open("assets/foto4_juan.png")
 
 #Imagenes Andres
 
-foto_andres1 = Image.open("foto1_andres.png")
-foto_andres2 = Image.open("foto2_andres.png")
-foto_andres3 = Image.open("foto3_andres.png")
-foto_andres4 = Image.open("foto4_andres.png")
+foto_andres1 = Image.open("assets/foto1_andres.png")
+foto_andres2 = Image.open("assets/foto2_andres.png")
+foto_andres3 = Image.open("assets/foto3_andres.png")
+foto_andres4 = Image.open("assets/foto4_andres.png")
 
 #Imagenes Maria
-foto_maria1 = Image.open("foto1_maria.png")
-foto_maria2 = Image.open("foto2_maria.png")
-foto_maria3 = Image.open("foto3_maria.png")
-foto_maria4 = Image.open("foto4_maria.png")
+foto_maria1 = Image.open("assets/foto1_maria.png")
+foto_maria2 = Image.open("assets/foto2_maria.png")
+foto_maria3 = Image.open("assets/foto3_maria.png")
+foto_maria4 = Image.open("assets/foto4_maria.png")
 
 # Cambiar el tamaño de las imágenes (ajustar según sea necesario)
 ancho = 200
