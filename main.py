@@ -1,15 +1,15 @@
 import sys
-
-from src.gestor_aplicacion.empresa.envio import Envio
-from src.gestor_aplicacion.empresa.ingrediente import Ingrediente
-
 # Agregar la ruta del directorio 'src' al principio de sys.path
-sys.path.insert(0, 'C:/Users/manue/Desktop/Poo/practica-2-grupo-dos-equipo-8/src')
+sys.path.insert(0, './src') 
+
+from gestor_aplicacion.empresa.envio import Envio
+from gestor_aplicacion.empresa.ingrediente import Ingrediente
+
 ##from gestor_aplicacion.empresa.administrador import *
 ##from gestor_aplicacion.producto.producto import *
 
-from src.gestor_aplicacion.empresa.administrador import Administrador
-from src.gestor_aplicacion.producto.producto import Producto
+from gestor_aplicacion.empresa.administrador import Administrador
+from gestor_aplicacion.producto.producto import Producto
 
 
 scan = input  # En Python, usamos `input` en lugar de `Scanner` para la entrada del usuario
