@@ -48,7 +48,7 @@ class Administrador:
             print(f"Error al inicializar: {e}")
 
     @staticmethod
-    def crearTodo():
+    def crear_todo():
         #Listas de productos iniciales
         ingredientes_iniciales_bodega = {}  
         ingredientes_iniciales = []  
