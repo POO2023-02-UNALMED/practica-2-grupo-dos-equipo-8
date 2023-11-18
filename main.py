@@ -28,7 +28,7 @@ def imprimir_separador():
 
 def compra_materia_prima_ui():
     print("Cantidad de ingredientes en bodega:")
-    contabilidad_ingredientes = administrador.bodega.mostrar_contabilidad_ingredientes()
+    contabilidad_ingredientes = administrador.bodega.mostrarContabilidadIngredientes()
     print(contabilidad_ingredientes)
 
     print("¿Cree necesario comprar ingredientes? (1.Si / 2.No): ")
