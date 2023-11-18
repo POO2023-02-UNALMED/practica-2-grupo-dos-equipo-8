@@ -36,7 +36,7 @@ def compra_materia_prima_ui():
     
     if respuesta_comprar_ingredientes == 1:
         # Mostrar los ingredientes escasos y preguntar si están seguros de que no necesitan comprar.
-        ingredientes_escasos = administrador.bodega.mostrar_ingredientes_escasos()
+        ingredientes_escasos = administrador.bodega.mostrarIngredientesEscasos()
         print(ingredientes_escasos)
 
         print("Aquí puede ver los ingredientes escasos, ¿Está seguro de que necesita comprar ingredientes? (1.Si / 2.No): ")
