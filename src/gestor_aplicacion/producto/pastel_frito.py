@@ -2,7 +2,7 @@ import sys
 sys.path.append('C:/Users/manue/Desktop/Poo/practica-2-grupo-dos-equipo-8/src/gestor_aplicacion')
 
 ##from src.gestor_aplicacion.producto.producto import Producto
-from gestor_aplicacion.producto.producto import Producto
+from .producto import Producto
 
 class PastelesFritos(Producto):
     def __init__(self, nombre, espacioAlmacenamiento, ingredientesNecesarios, precioBase, ID, peso, dulce, salsa):

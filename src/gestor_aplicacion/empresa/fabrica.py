@@ -3,10 +3,10 @@
 ##from src.gestor_aplicacion.producto.pastel_frito import PastelesFritos
 ##from src.gestor_aplicacion.producto.torta import Tortas
 
-import gestor_aplicacion.empresa.ingrediente
-import gestor_aplicacion.producto.galleta
-import gestor_aplicacion.producto.pastel_frito
-import gestor_aplicacion.producto.torta
+from .ingrediente import Ingrediente
+from ..producto.galleta import Galleta
+from ..producto.pastel_frito import PastelesFritos
+from ..producto.torta import Tortas
 
 class Fabrica:
     def __init__(self, NIT, direccion, bodega):
