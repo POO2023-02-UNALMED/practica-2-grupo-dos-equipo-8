@@ -5,7 +5,7 @@ from gestor_aplicacion.empresa.ingrediente import Ingrediente
 class Bodega:
     def __init__(self, identificador, contabilidadProductos, espacioAlmacenamiento, contabilidadIngredientes, productos, ingredientes):
         self.identificador = identificador
-        self.contabilidadIngredientes = contabilidadProductos
+        self.contabilidadProductos = contabilidadProductos
         self.contabilidadIngredientes = contabilidadIngredientes
         self.espacioAlmacenamiento = espacioAlmacenamiento
         self.productos = productos
@@ -14,7 +14,7 @@ class Bodega:
         for producto in productos:
             self.espacioAlmacenamiento -= producto.getEspacioAlmacenamiento()
         for ingrediente in ingredientes:
-            self.espacioAlmacenamiento -= ingrediente.getEspacioAlmacenamiento()
+            self.espacioAlmacenamiento -= ingrediente.espacio_almacenamiento
     
     def mostrarContabilidadIngredientes(self):
         resultado = "Contabilidad de Ingredientes:\n"

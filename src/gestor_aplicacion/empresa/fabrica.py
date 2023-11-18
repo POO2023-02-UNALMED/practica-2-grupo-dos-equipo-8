@@ -1,12 +1,13 @@
-##from src.gestor_aplicacion.empresa.ingrediente import Ingrediente
-##from src.gestor_aplicacion.producto.galleta import Galleta
-##from src.gestor_aplicacion.producto.pastel_frito import PastelesFritos
-##from src.gestor_aplicacion.producto.torta import Tortas
+from gestor_aplicacion.empresa.ingrediente import Ingrediente
+from gestor_aplicacion.producto.galleta import Galleta
+from gestor_aplicacion.producto.pastel_frito import PastelesFritos
+from gestor_aplicacion.producto.torta import Tortas
+from gestor_aplicacion.producto.dona import Donas
 
-import gestor_aplicacion.empresa.ingrediente
+""" import gestor_aplicacion.empresa.ingrediente
 import gestor_aplicacion.producto.galleta
 import gestor_aplicacion.producto.pastel_frito
-import gestor_aplicacion.producto.torta
+import gestor_aplicacion.producto.torta """
 
 class Fabrica:
     def __init__(self, NIT, direccion, bodega):
@@ -41,7 +42,7 @@ class Fabrica:
                     }
                     nuevoProducto = Tortas(nombreProducto, 5, ingredientesTorta, 20, "abc123", 3, 6, "chocolate")
                     self.bodega.getProductos().append(nuevoProducto)
-                    self.bodega.getContabilidadProductos().merge(nombreProducto, 1, int.__add__)
+                    self.bodega.getContabilidadProductos()[nombreProducto] += 1
                     self.actualizarContabilidadIngredientes(ingredientesTorta)
                 elif nombreProducto == "pastelFrito":
                     ingredientesPastelFrito = {
@@ -50,7 +51,7 @@ class Fabrica:
                     }
                     nuevoProducto = PastelesFritos(nombreProducto, 5, ingredientesPastelFrito, 20, "dfg123", 3, False, "tomate")
                     self.bodega.getProductos().append(nuevoProducto)
-                    self.bodega.getContabilidadProductos().merge(nombreProducto, 1, int.__add__)
+                    self.bodega.getContabilidadProductos()[nombreProducto] += 1
                     self.actualizarContabilidadIngredientes(ingredientesPastelFrito)
                 elif nombreProducto == "galleta":
                     ingredientesGalleta = {
@@ -59,7 +60,7 @@ class Fabrica:
                     }
                     nuevoProducto = Galleta(nombreProducto, 5, ingredientesGalleta, 20, "dfg123", 3, False, "vainilla")
                     self.bodega.getProductos().append(nuevoProducto)
-                    self.bodega.getContabilidadProductos().merge(nombreProducto, 1, int.__add__)
+                    self.bodega.getContabilidadProductos()[nombreProducto] += 1
                     self.actualizarContabilidadIngredientes(ingredientesGalleta)
                 elif nombreProducto == "dona":
                     ingredientesDona = {
@@ -68,15 +69,15 @@ class Fabrica:
                     }
                     nuevoProducto = Donas(nombreProducto, 5, ingredientesDona, 20, "dfg123", 3, False, "arquipe")
                     self.bodega.getProductos().append(nuevoProducto)
-                    self.bodega.getContabilidadProductos().merge(nombreProducto, 1, int.__add__)
+                    self.bodega.getContabilidadProductos()[nombreProducto] += 1
                     self.actualizarContabilidadIngredientes(ingredientesDona)
 
     def actualizarContabilidadIngredientes(self, ingredientes):
         for ingrediente in ingredientes.keys():
-            if ingrediente.getNombre() in self.bodega.getContabilidadIngredientes():
+            if ingrediente.nombre in self.bodega.getContabilidadIngredientes():
                 valorARestar = ingredientes[ingrediente]
-                valorActual = self.bodega.getContabilidadIngredientes()[ingrediente.getNombre()]
-                self.bodega.getContabilidadIngredientes()[ingrediente.getNombre()] = valorActual - valorARestar
+                valorActual = self.bodega.getContabilidadIngredientes()[ingrediente.nombre]
+                self.bodega.getContabilidadIngredientes()[ingrediente.nombre] = valorActual - valorARestar
 
     def obtenerIngredientesRequeridos(self):
         ingredientesRequeridos = {}
@@ -116,7 +117,7 @@ class Fabrica:
             cadena += f"{index}. {producto.getNombre()}: {cantidad} - ${producto.getPrecio() * cantidad}\n"
 
             for ingrediente, cantidad_ingrediente in producto.getIngredientesNecesarios().items():
-                cadena += f"\t{ingrediente.getNombre()} - {cantidad_ingrediente * cantidad}\n"
+                cadena += f"\t{ingrediente.nombre} - {cantidad_ingrediente * cantidad}\n"
 
             index += 1
         return cadena
@@ -206,6 +207,6 @@ class Fabrica:
             cadena += f"{producto.getNombre()} - {len(productosEnBodega[producto])} - ${producto.getPrecio()} - {producto.getDiasBodega()} días en bodega\n"
 
             for ingrediente, cantidad in producto.getIngredientesUsados().items():
-                cadena += f"\t{ingrediente.getNombre()} - {cantidad}\n"
+                cadena += f"\t{ingrediente.nombre} - {cantidad}\n"
 
         return cadena

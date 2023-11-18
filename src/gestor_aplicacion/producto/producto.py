@@ -2,11 +2,11 @@ from abc import ABC, abstractmethod
 from .i_producto_ingrediente import IProductoIngrediente
 
 
-class Producto(IProductoIngrediente):
+class Producto:
     def __init__(self, nombre, ingredientesNecesarios, precioBase, ID, peso):
         espacioCalculado = 0
         for ingrediente, cantidad in ingredientesNecesarios.items():
-            pesoIngrediente = ingrediente.espacioAlmacenamiento
+            pesoIngrediente = ingrediente.espacio_almacenamiento
             espacioCalculado += cantidad * pesoIngrediente
         espacioAproximado = round(espacioCalculado * 1.1)
 
@@ -22,13 +22,13 @@ class Producto(IProductoIngrediente):
     def listarIngredientesNecesarios(self):
         result = ""
         for ingrediente, cantidad in self.ingredientesNecesarios.items():
-            result += f"Necesita la cantidad de {cantidad} {ingrediente.getNombre()}.\n"
+            result += f"Necesita la cantidad de {cantidad} {ingrediente.nombre}.\n"
         return result
 
     def calcularPrecio(self, precioBase):
         precio = precioBase if precioBase >= 0 else 0
         for ingrediente, cantidad in self.ingredientesNecesarios.items():
-            precio += ingrediente.getPrecio() * cantidad
+            precio += ingrediente.precio * cantidad
         return precio
 
     def __str__(self):

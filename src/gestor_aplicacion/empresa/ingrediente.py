@@ -2,7 +2,7 @@
 from gestor_aplicacion.producto.i_producto_ingrediente import IProductoIngrediente
 
 
-class Ingrediente:
+class Ingrediente(IProductoIngrediente):
     ingredientes_disponibles = []
 
     def __init__(self, nombre, precio_base, identificador=None, espacio_almacenamiento=None):

@@ -8,7 +8,7 @@ from gestor_aplicacion.empresa.bodega import Bodega
 from gestor_aplicacion.producto.torta import Tortas
 from gestor_aplicacion.producto.pastel_frito import PastelesFritos
 from gestor_aplicacion.producto.dona import Donas
-
+from gestor_aplicacion.producto.galleta import Galleta as Galletas
 
 class Administrador:
     def __init__(self, bodega, caja, camiones, fabrica):
@@ -174,14 +174,14 @@ class Administrador:
         }
 
         # Establecer la producción diaria en la fábrica
-        fabrica.set_produccion_diaria(produccion_diaria)
+        fabrica.produccion_diaria = produccion_diaria
 
         # Finalizar la producción dos veces
-        fabrica.finalizar_produccion(produccion_diaria)
-        fabrica.finalizar_produccion(produccion_diaria)
+        fabrica.finalizarProduccion(produccion_diaria)
+        fabrica.finalizarProduccion(produccion_diaria)
         caja=Caja(10000)
 
-        administrador = Administrador(bodega, caja, Camion.getCamiones(), fabrica)
+        administrador = Administrador(bodega, caja, Camion.camiones, fabrica)
         return administrador
 
     @staticmethod
