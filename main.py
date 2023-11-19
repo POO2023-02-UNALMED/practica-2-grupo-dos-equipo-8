@@ -145,7 +145,15 @@ while True:
     elif opcion == 2:
         venta_por_encargo_ui()
     elif opcion == 3:
-        pass
-    elif opcion == 4:
         cambiar_lista_produccion_diaria_ui()
+    elif opcion == 4:
+        pass
+    elif opcion == 5:
+        pass
+    elif opcion == 6:
+        pass
+    elif opcion == 7:
+        pass
+    elif opcion == 8:
+        pass
     # Asegúrate de que las funciones para las opciones 5, 6, 7 y 8 estén definidas
