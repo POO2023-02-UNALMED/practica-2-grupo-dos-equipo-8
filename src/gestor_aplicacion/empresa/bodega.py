@@ -3,18 +3,18 @@ from gestor_aplicacion.empresa.ingrediente import Ingrediente
 
 
 class Bodega:
-    def __init__(self, identificador, contabilidadProductos, espacioAlmacenamiento, contabilidadIngredientes, productos, ingredientes):
+    def __init__(self, identificador, contabilidad_productos, espacio_almacenamiento, contabilidad_ingredientes, productos, ingredientes):
         self.identificador = identificador
-        self.contabilidadProductos = contabilidadProductos
-        self.contabilidadIngredientes = contabilidadIngredientes
-        self.espacioAlmacenamiento = espacioAlmacenamiento
+        self.contabilidad_productos = contabilidad_productos
+        self.contabilidad_ingredientes = contabilidad_ingredientes
+        self.espacio_almacenamiento = espacio_almacenamiento
         self.productos = productos
         self.ingredientes = ingredientes
         
         for producto in productos:
-            self.espacioAlmacenamiento -= producto.getEspacioAlmacenamiento()
+            self.espacio_almacenamiento -= producto.get_espacio_almacenamiento()
         for ingrediente in ingredientes:
-            self.espacioAlmacenamiento -= ingrediente.espacio_almacenamiento
+            self.espacio_almacenamiento -= ingrediente.espacio_almacenamiento
     
     def mostrar_contabilidad_ingredientes(self):
         resultado = "Contabilidad de Ingredientes:\n"
@@ -31,7 +31,7 @@ class Bodega:
         indice = 1
         
         for producto in self.productos:
-            resultado += f"{indice}. {producto.getNombre()} - Precio: ${producto.getPrecio()}\n"
+            resultado += f"{indice}. {producto.get_nombre()} - Precio: ${producto.get_precio()}\n"
             indice += 1
         
         return resultado
@@ -79,20 +79,20 @@ class Bodega:
         return resultado
 
     def stringProductosOrdenadosPorDiasBodega(self):
-        productosOrdenados = self.productosOrdenadosPorDiasBodega()
+        productos_ordenados = self.productos_ordenados_por_dias_bodega()
         resultado = "Estancia de Productos en Bodega (Orden por Días en Bodega):\n"
         
-        for producto in productosOrdenados:
-            tiempoEnBodega = producto.getDiasBodega()
-            nombreProducto = producto.getNombre()
-            resultado += f"Producto: {nombreProducto}, Tiempo en Bodega: {tiempoEnBodega} días\n"
+        for producto in productos_ordenados:
+            tiempo_en_bodega = producto.get_dias_bodega()
+            nombre_producto = producto.get_nombre()
+            resultado += f"Producto: {nombre_producto}, Tiempo en Bodega: {tiempo_en_bodega} días\n"
 
         return resultado
 
-    def productosOrdenadosPorDiasBodega(self):
-        productosOrdenados = list(self.productos)
-        productosOrdenados.sort(key=lambda p: p.getDiasBodega(), reverse=True)
-        return productosOrdenados
+    def productos_ordenados_por_dias_bodega(self):
+        productos_ordenados = list(self.productos)
+        productos_ordenados.sort(key=lambda p: p.get_dias_bodega(), reverse=True)
+        return productos_ordenados
 
     def actualizarProduccionPrecio(self, actualizarProduccion=False, actualizarPrecio=False, fabrica=None):
         mensaje = ""
@@ -127,11 +127,11 @@ class Bodega:
 
     def actualizarPrecioBaseDiasBodega(self):
         try:
-            productos = self.productosOrdenadosPorDiasBodega()
+            productos = self.productos_ordenados_por_dias_bodega()
 
             for producto in productos:
-                if producto.getDiasBodega() >= 5 and producto.getPrecio() > 1:
-                    producto.setPrecio(int(producto.getPrecio() * 0.50))
+                if producto.get_dias_bodega() >= 5 and producto.get_precio() > 1:
+                    producto.setPrecio(int(producto.get_precio() * 0.50))
 
             return "Se ha actualizado correctamente los precios con respecto a sus días en bodega."
         
@@ -140,12 +140,12 @@ class Bodega:
 
     def guardarEnBodega(self, tanda):
         for producto, cantidad in tanda.items():
-            nombreProducto = producto.getNombre()
-            if nombreProducto in self.contabilidadProductos:
-                cantidadActual = self.contabilidadProductos[nombreProducto]
-                self.contabilidadProductos[nombreProducto] = cantidadActual + cantidad
+            nombre_producto = producto.get_nombre()
+            if nombre_producto in self.contabilidadProductos:
+                cantidadActual = self.contabilidadProductos[nombre_producto]
+                self.contabilidadProductos[nombre_producto] = cantidadActual + cantidad
             else:
-                self.contabilidadProductos[nombreProducto] = cantidad
+                self.contabilidadProductos[nombre_producto] = cantidad
 
     def verificarTandaBodega(self, tanda):
         suma = sum(cantidad for cantidad in tanda.values())
@@ -164,17 +164,17 @@ class Bodega:
                 ingredienteEncontrado = False
 
                 for ingredienteEnInventario in inventarioIngredientes:
-                    if ingredienteEnInventario.getNombre() == ingrediente.getNombre():
+                    if ingredienteEnInventario.get_nombre() == ingrediente.get_nombre():
                         ingredienteEncontrado = True
 
                         if ingredienteEnInventario.getCantidad() >= cantidadNecesaria:
                             ingredienteEnInventario.setCantidad(ingredienteEnInventario.getCantidad() - cantidadNecesaria)
                         else:
-                            mensaje += f"No hay suficiente cantidad de {ingrediente.getNombre()} en la bodega."
+                            mensaje += f"No hay suficiente cantidad de {ingrediente.get_nombre()} en la bodega."
                         break
 
                 if not ingredienteEncontrado:
-                    mensaje += f"El ingrediente {ingrediente.getNombre()} no está disponible en la bodega."
+                    mensaje += f"El ingrediente {ingrediente.get_nombre()} no está disponible en la bodega."
 
             self.ingredientes = inventarioIngredientes
             mensaje += "Se ha actualizado el inventario."
@@ -184,38 +184,40 @@ class Bodega:
         
         return mensaje
 
-    def getIdentificador(self):
-        return self.identificador
-
-    def setIdentificador(self, identificador):
-        self.identificador = identificador
-
-    def getProductos(self):
-        return self.productos
-
-    def setProductos(self, productos):
-        self.productos = productos
-
-    def getEspacioAlmacenamiento(self):
+    def get_espacio_almacenamiento(self):
         return self.espacioAlmacenamiento
-
-    def setEspacioAlmacenamiento(self, espacioAlmacenamiento):
-        self.espacioAlmacenamiento = espacioAlmacenamiento
-
-    def getIngredientes(self):
+    
+    def set_espacio_almacenamiento(self, espacio_almacenamiento):
+        self.espacio_almacenamiento = espacio_almacenamiento
+        
+    def get_contabilidad_ingredientes(self):
+        return self.contabilidad_ingredientes
+    
+    def set_contabilidad_ingredientes(self, contabilidad_ingredientes):
+        self.contabilidad_ingredientes = contabilidad_ingredientes
+        
+    def get_contabilidad_productos(self):
+        return self.contabilidad_productos
+    
+    def set_contabilidad_productos(self, contabilidad_productos):
+        self.contabilidad_productos = contabilidad_productos
+        
+    def get_productos(self):
+        return self.productos
+    
+    def set_productos(self, productos):
+        self.productos = productos
+        
+    def get_ingredientes(self):
         return self.ingredientes
-
-    def setIngredientes(self, listaMateriaPrimaActual):
-        self.ingredientes = listaMateriaPrimaActual
-
-    def getContabilidadProductos(self):
-        return self.contabilidadProductos
-
-    def setContabilidadProductos(self, contabilidadProductos):
-        self.contabilidadProductos = contabilidadProductos
-
-    def getContabilidadIngredientes(self):
-        return self.contabilidadIngredientes
-
-    def setContabilidadIngredientes(self, contabilidadIngredientes):
-        self.contabilidadIngredientes = contabilidadIngredientes
+    
+    def set_ingredientes(self, ingredientes):
+        self.ingredientes = ingredientes
+        
+    def get_identificador(self):
+        return self.identificador
+    
+    def set_identificador(self, identificador):
+        self.identificador = identificador
+        
+    

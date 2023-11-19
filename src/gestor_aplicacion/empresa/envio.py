@@ -16,7 +16,7 @@ class Envio:
             clave = producto.get_nombre()
             self.bodega.contabilidad_productos[clave] = valor_actual - 1
             # Agregamos venta al historial de ventas
-            Caja.agregar_venta(producto, 1)
+            caja.agregar_venta(producto, 1)
             caja.ingresar_dinero(producto.get_precio())
 
         # se suma el dinero del envío a la caja

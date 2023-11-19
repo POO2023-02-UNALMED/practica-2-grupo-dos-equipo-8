@@ -35,35 +35,28 @@ def compra_materia_prima_ui():
     respuesta_comprar_ingredientes = int(scan())
     
     if respuesta_comprar_ingredientes == 1:
-        # Mostrar los ingredientes escasos y preguntar si están seguros de que no necesitan comprar.
-        ingredientes_escasos = administrador.bodega.mostrar_ingredientes_escasos()
-        print(ingredientes_escasos)
-
-        print("Aquí puede ver los ingredientes escasos, ¿Está seguro de que necesita comprar ingredientes? (1.Si / 2.No): ")
-        respuesta_ingredientes_escasos = int(scan())
-
-        if respuesta_ingredientes_escasos == 1:
-            print("Seleccione el ingrediente que desea pedir:")
-            print(Ingrediente.obtener_lista_ingredientes())
-            opcion = int(scan())
-
-            if opcion < 1 or opcion > len(Ingrediente.ingredientes_disponibles()):
-                print("Opción no válida. Seleccione un número válido.")
-                return
-
-            # Solicitar la cantidad deseada
-            nombre_ingrediente = Ingrediente.ingredientes_disponibles()[opcion - 1].nombre
-            print(f"¿Cuántos {nombre_ingrediente} desea pedir?")
-            cantidad_pedida = int(scan())
-
-            print(administrador.bodega.pedir_cantidad_ingrediente(opcion, cantidad_pedida, administrador))
-
-        else:
-            print("Por ahora no se compra nada.")
-    elif respuesta_comprar_ingredientes == 2:
-        print("Por ahora no se compra nada.")
-    else:
-        print("Opción no válida.")
+        print("Cantidad de ingredientes en bodega:")
+        contabilidad_ingredientes = administrador.bodega.mostrar_contabilidad_ingredientes()
+        print(contabilidad_ingredientes)
+        print("crees necesario comprar ingredientes? (1.Si / 2.No): ")
+        respuesta_comprar_ingredientes = int(scan())
+        if respuesta_comprar_ingredientes == 1:
+            ingredientes_escasos = administrador.bodega.mostrar_ingredientes_escasos()
+            print(ingredientes_escasos)
+            print("Aquí puede ver los ingredientes escasos, ¿Está seguro de que necesita comprar ingredientes? (1.Si / 2.No): ")
+            respuesta_ingredientes_escasos = int(scan())
+            if respuesta_ingredientes_escasos == 1:
+                print("Seleccione el ingrediente que desea pedir:")
+                print(Ingrediente.obtener_lista_ingredientes())
+                opcion = int(scan())
+                if opcion < 1 or opcion > len(Ingrediente.get_ingredientes_disponibles()):
+                    print("Opción no válida. Seleccione un número válido.")
+                nombre_ingrediente = Ingrediente.get_ingredientes_disponibles()[opcion - 1].nombre
+                print(f"¿Cuántos {nombre_ingrediente} desea pedir?")
+                cantidad_pedida = int(scan())
+                print(administrador.bodega.pedir_cantidad_ingrediente(opcion, cantidad_pedida, administrador))
+            else:
+                print("Por ahora no se compra nada.")
 
 def venta_por_encargo_ui():
     # Pedir al usuario que ingrese un código de envío
@@ -78,7 +71,7 @@ def venta_por_encargo_ui():
 
     while seleccionar_otro_producto:
         # Mostrar la lista de productos disponibles
-        print(administrador.bodega.mostrarProductos())
+        print(administrador.bodega.mostrar_productos())
 
         # Pedir al cliente que elija un producto
         print("Elija un producto ingresando el número correspondiente: ")
@@ -148,32 +141,11 @@ while True:
     opcion = int(scan())
 
     if opcion == 1:
-        print("Cantidad de ingredientes en bodega:")
-        contabilidad_ingredientes = administrador.bodega.mostrar_contabilidad_ingredientes()
-        print(contabilidad_ingredientes)
-        print("crees necesario comprar ingredientes? (1.Si / 2.No): ")
-        respuesta_comprar_ingredientes = int(scan())
-        if respuesta_comprar_ingredientes == 1:
-            ingredientes_escasos = administrador.bodega.mostrar_ingredientes_escasos()
-            print(ingredientes_escasos)
-            print("Aquí puede ver los ingredientes escasos, ¿Está seguro de que necesita comprar ingredientes? (1.Si / 2.No): ")
-            respuesta_ingredientes_escasos = int(scan())
-            if respuesta_ingredientes_escasos == 1:
-                print("Seleccione el ingrediente que desea pedir:")
-                print(Ingrediente.obtener_lista_ingredientes())
-                opcion = int(scan())
-                if opcion < 1 or opcion > len(Ingrediente.get_ingredientes_disponibles()):
-                    print("Opción no válida. Seleccione un número válido.")
-                nombre_ingrediente = Ingrediente.get_ingredientes_disponibles()[opcion - 1].nombre
-                print(f"¿Cuántos {nombre_ingrediente} desea pedir?")
-                cantidad_pedida = int(scan())
-                print(administrador.bodega.pedir_cantidad_ingrediente(opcion, cantidad_pedida, administrador))
-            else:
-                print("Por ahora no se compra nada.")
+        compra_materia_prima_ui()   
     elif opcion == 2:
-        compra_materia_prima_ui()
-    elif opcion == 3:
         venta_por_encargo_ui()
+    elif opcion == 3:
+        pass
     elif opcion == 4:
         cambiar_lista_produccion_diaria_ui()
     # Asegúrate de que las funciones para las opciones 5, 6, 7 y 8 estén definidas

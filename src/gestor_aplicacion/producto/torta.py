@@ -1,28 +1,30 @@
-##from src.gestor_aplicacion.producto.producto import Producto
-from gestor_aplicacion.producto.producto import Producto
 
+from .producto import Producto
 
 class Tortas(Producto):
-    def __init__(self, nombre, espacioAlmacenamiento, hashMap, precioBase, ID, peso, porciones, cobertura):
-        super().__init__(nombre, hashMap, precioBase, ID, peso)
+    def __init__(self, nombre, espacio_almacenamiento, hash_map, precio_base, ID, peso, porciones, cobertura):
+        super().__init__(nombre, hash_map, precio_base, ID, peso)
         self.porciones = porciones
         self.cobertura = cobertura
 
-    def listaCaracteristicas(self):
+    def lista_caracteristicas(self):
         str = super().__str__()
-        str += f"Porciones: {self.getPorciones()}\n"
-        str += f"Cobertura: {self.getCobertura()}\n"
+        str += f"Porciones: {self.get_porciones()}\n"
+        str += f"Cobertura: {self.get_cobertura()}\n"
         str += "-" * 50 + "\n"
         return str
 
-    def getPorciones(self):
+    def get_porciones(self):
         return self.porciones
 
-    def setPorciones(self, porciones):
+    def set_porciones(self, porciones):
         self.porciones = porciones
-
-    def getCobertura(self):
-        return self.cobertura
-
-    def setCobertura(self, cobertura):
-        self.cobertura = cobertura
+        
+    def get_espacio_almacenamiento(self):
+        return self.espacio_almacenamiento
+    
+    def set_espacio_almacenamiento(self, espacioAlmacenamiento):
+        self.espacio_almacenamiento = espacioAlmacenamiento
+        
+    
+    
