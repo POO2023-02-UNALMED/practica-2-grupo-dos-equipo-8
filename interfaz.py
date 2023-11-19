@@ -49,7 +49,7 @@ def ingresar():
             combo_box.set(valor_inicial)
             def enviar():
                 if self.permitir_cambios==True:
-                    respuesta=comobo_box.get()
+                    respuesta=combo_box.get()
                     comobo_box.config(state="disabled")
                     self.permitir_cambios=False
                     return respuesta
@@ -57,7 +57,7 @@ def ingresar():
             boton_confirmación=Button(frame_dialogo,text="Enviar",command=enviar)
 
             label_petición.grid(row=0,column=0,padx=10,pady=50)
-            comobo_box.grid(row=0,column=1,padx=10,pady=50)
+            combo_box.grid(row=0,column=1,padx=10,pady=50)
             boton_confirmación.grid(row=0,column=2,padx=10,pady=50)
             
 

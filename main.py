@@ -17,6 +17,7 @@ from gestor_aplicacion.producto.torta import Tortas
 from gestor_aplicacion.producto.dona import Donas
 from gestor_aplicacion.producto.pastel_frito import PastelesFritos
 from gestor_aplicacion.producto.galleta import Galleta
+from interfaz import interfaz
 
 
 scan = input  # En Python, usamos `input` en lugar de `Scanner` para la entrada del usuario
@@ -425,7 +426,7 @@ while True:
         print("Hasta luego.")
         break
     
-        
+interfaz()
     # Asegúrate de que las funciones para las opciones 5, 6, 7 y 8 estén definidas
     
     
