@@ -9,7 +9,14 @@ from gestor_aplicacion.empresa.ingrediente import Ingrediente
 ##from gestor_aplicacion.producto.producto import *
 
 from gestor_aplicacion.empresa.administrador import Administrador
+from gestor_aplicacion.empresa.camion import Camion
+from gestor_aplicacion.empresa.bodega import Bodega
+from gestor_aplicacion.empresa.caja import Caja
 from gestor_aplicacion.producto.producto import Producto
+from gestor_aplicacion.producto.torta import Tortas
+from gestor_aplicacion.producto.dona import Donas
+from gestor_aplicacion.producto.pastel_frito import PastelesFritos
+from gestor_aplicacion.producto.galleta import Galleta
 
 
 scan = input  # En Python, usamos `input` en lugar de `Scanner` para la entrada del usuario
@@ -25,7 +32,8 @@ def imprimir_lista_productos():
 
 def imprimir_separador():
     print("-" * 50)
-
+#------------------------------------------------------------------------------------------------------------------
+#Funcionalidad 1
 def compra_materia_prima_ui():
     print("Cantidad de ingredientes en bodega:")
     contabilidad_ingredientes = administrador.bodega.mostrar_contabilidad_ingredientes()
@@ -57,7 +65,8 @@ def compra_materia_prima_ui():
                 print(administrador.bodega.pedir_cantidad_ingrediente(opcion, cantidad_pedida, administrador))
             else:
                 print("Por ahora no se compra nada.")
-
+#--------------------------------------------------------------------------------------------------------------------
+#Funcionalidad 2
 def venta_por_encargo_ui():
     # Pedir al usuario que ingrese un código de envío
     print("Ingrese un código de envío (número entero): ")
@@ -101,7 +110,8 @@ def venta_por_encargo_ui():
 
     # Mensaje de confirmación
     print(f"Se ha creado un nuevo envío con código {nuevo_envio.codigo_de_envio} y los productos seleccionados.")
-
+#--------------------------------------------------------------------------------------------------------------------
+#Funcionalidad 3
 def cambiar_lista_produccion_diaria_ui():
     # Pedir al usuario que ingrese una nueva lista de producción diaria
     print("Ingrese una nueva lista de producción diaria (Ejemplo: 2 5 3 4): ")
@@ -121,6 +131,216 @@ def cambiar_lista_produccion_diaria_ui():
             print("La lista de producción diaria se ha actualizado correctamente.")
         except ValueError:
             print("Asegúrese de ingresar números enteros separados por espacios.")
+ #----------------------------------------------------------------------------------------------------------------------------           
+#FUNCIONALIDAD 4            
+def agregar_producto_ui():
+    def imprimir_separador():
+        print("-" * 50)
+    
+    
+    
+    lista_ingredientes = Ingrediente.obtener_lista_ingredientes()
+    print(lista_ingredientes)
+    imprimir_separador()
+    respuesta = int(input("Tu producto va a necesitar un ingrediente que no esté en la lista? (1.Si / 2.No): "))
+    
+    while respuesta == 1:
+        nombre = input("Ingresa el nombre del nuevo Ingrediente: ")
+        precio = int(input("Ingresa el precio del nuevo Ingrediente: "))
+        identificador = int(input("Ingresa el identificador del nuevo Ingrediente: "))
+        espacio = int(input("Ingresa el espacio de almacenamiento del nuevo Ingrediente: "))
+        
+        nuevo = Ingrediente(nombre, precio, identificador, espacio)
+        temporal = administrador.bodega.ingredientes[:]
+        temporal.append(nuevo)
+        
+        bodega_temporal = administrador.bodega
+        bodega_temporal.ingredientes = temporal
+        
+        administrador.bodega = bodega_temporal
+        
+        respuesta = int(input("Quieres crear otro ingrediente? (1.Si / 2.No): "))
+    
+    imprimir_separador()
+    print("Se han agregado los nuevos ingredientes")
+    imprimir_separador()
+    
+    lista_ingredientes = Ingrediente.obtener_lista_ingredientes()
+    print(lista_ingredientes)
+    
+    ingredientes_y_cantidad = {}
+    seleccionar_otro_ingrediente = True
+    
+    while seleccionar_otro_ingrediente:
+        opcion_ingrediente = int(input("Seleccione el número correspondiente al ingrediente que necesita para su producto: "))
+        imprimir_separador()
+        
+        if 1 <= opcion_ingrediente <= len(Ingrediente.ingredientes_disponibles):
+            ingrediente_elegido = Ingrediente.ingredientes_disponibles[opcion_ingrediente - 1]
+            
+            cantidad_ingrediente = int(input(f"Ingrese la cantidad de {ingrediente_elegido.nombre} que necesita: "))
+            ingredientes_y_cantidad[ingrediente_elegido] = cantidad_ingrediente
+            
+            respuesta1 = int(input("¿Desea seleccionar otro ingrediente? (1.Sí / 2.No): "))
+            
+            if respuesta1 != 1:
+                if len(ingredientes_y_cantidad) < 2:
+                    imprimir_separador()
+                    print("Se requieren mínimo dos ingredientes para la creación de un producto")
+                    imprimir_separador()
+                else:
+                    seleccionar_otro_ingrediente = False
+        else:
+            print("Opción no válida. Seleccione un número válido.")
+    
+    print("Seleccione el tipo de producto que desea crear:")
+    print("1. Torta")
+    print("2. Dona")
+    print("3. Pasteles Fritos")
+    print("4. Galleta")
+    
+    tipo_producto = int(input())
+    
+    producto_creado = None
+    
+    if tipo_producto == 1:
+        producto_creado = Tortas("torta", 5, ingredientes_y_cantidad, 0, "abc123", 3, 6, "chocolate")
+        print(f"Producto exitosamente creado: {producto_creado}")
+        temp1 = administrador.bodega.productos[:]
+        temp1.append(producto_creado)
+        bodegatemporal1 = administrador.bodega
+        bodegatemporal1.productos = temp1
+        administrador.bodega = bodegatemporal1
+    elif tipo_producto == 2:
+        producto_creado = Donas("dona", 5, ingredientes_y_cantidad, 20, "dfg123", 3, False, "arquipe")
+        print(f"Producto exitosamente creado: {producto_creado}")
+        temp2 = administrador.bodega.productos[:]
+        temp2.append(producto_creado)
+        bodegatemporal2 = administrador.bodega
+        bodegatemporal2.productos = temp2
+        administrador.bodega = bodegatemporal2
+    elif tipo_producto == 3:
+        producto_creado = PastelesFritos("pastelFrito", 5, ingredientes_y_cantidad, 20, "dfg123", 3, False, "tomate")
+        print(f"Producto exitosamente creado: {producto_creado}")
+        temp3 = administrador.bodega.productos[:]
+        temp3.append(producto_creado)
+        bodegatemporal3 = administrador.bodega
+        bodegatemporal3.productos = temp3
+        administrador.bodega = bodegatemporal3
+    elif tipo_producto == 4:
+        producto_creado = Galletas("galleta", 5, ingredientes_y_cantidad, 20, "dfg123", 3, False, "vainilla")
+        print(f"Producto exitosamente creado: {producto_creado}")
+        temp4 = administrador.bodega.productos[:]
+        temp4.append(producto_creado)
+        bodegatemporal4 = administrador.bodega
+        bodegatemporal4.productos = temp4
+        administrador.bodega = bodegatemporal4
+    else:
+        print("Opción no válida.")
+        print(f"Producto exitosamente creado: {producto_creado}")
+#--------------------------------------------------------------------------------------------------------------------
+#Funcionalidad 5
+def eliminar_producto_ui():
+    print("Actualmente se ofrecen los siguientes productos: ")
+    imprimir_lista_productos()
+    nombre_producto_eliminar = input("Por favor, escriba el nombre del producto que desea eliminar: ")
+
+    productos = administrador.bodega.productos[:]
+    producto_a_eliminar = None
+    indice_a_eliminar = -1
+
+    for i, producto in enumerate(productos):
+        if producto.nombre.lower() == nombre_producto_eliminar.lower():
+            producto_a_eliminar = producto
+            indice_a_eliminar = i
+            break
+
+    if producto_a_eliminar is not None:
+        confirmacion = int(input(f"¿Seguro que desea eliminar el producto '{producto_a_eliminar.nombre}'? (1.Sí / 2.No): "))
+        
+        if confirmacion == 1:
+            productos.pop(indice_a_eliminar)
+            print("El producto ha sido eliminado con éxito.")
+
+            bodega_temporal2 = administrador.bodega
+            bodega_temporal2.productos = productos
+
+            administrador.bodega = bodega_temporal2
+        else:
+            print("No se ha eliminado ningún producto.")
+    else:
+        print("El producto ingresado no se encontró en la lista de productos.")
+#--------------------------------------------------------------------------------------------------------------------
+#Funcionalidad 6
+def asignar_envio_camion_ui():
+    try:
+        # Mostrar los envíos sin camión asignado
+        print("Envíos pendientes de asignación de camión:")
+        print(Envio.envios_por_asignar())
+
+        # Preguntar al usuario cuál envío desea asignar
+        print("Seleccione el número del envío que desea asignar a un camión: ")
+        eleccion = int(input())
+        
+        if 1 <= eleccion <= len(Envio.lista_envios_no_asignados):
+            # El usuario ha seleccionado un envío válido
+            envio_asignar = Envio.lista_envios_no_asignados[eleccion - 1]
+            envio_asignar.asignado_a_un_camion = True
+            print(Camion.camiones_y_capacidad(envio_asignar.peso_total))
+
+            # Preguntar al usuario cuál camión desea usar
+            print("Seleccione el número del camión que desea asignar: ")
+            eleccion_camion = int(input())
+            
+            if 1 <= eleccion_camion <= len(Camion.camiones):
+                # El usuario ha seleccionado un camión válido
+                camion_asignado = Camion.camiones[eleccion_camion - 1]
+
+                # Asignar el camión al envío
+                camion_asignado.agregar_envio(envio_asignar)
+                envio_asignar.camion_asignado = camion_asignado
+                envio_asignar.asignado_a_un_camion = True
+                camion_asignado.capacidad -= envio_asignar.peso_total
+
+                Envio.lista_envios_no_asignados.remove(envio_asignar)
+                Envio.lista_envios_asignados.append(envio_asignar)
+
+                print(f"Envío asignado exitosamente al camión {camion_asignado.marca} {camion_asignado.modelo} con placa {camion_asignado.placa}")
+
+                # Mostrar productos en bodega no asignados
+                print("Productos en bodega no asignados a envíos:")
+                print(administrador.bodega.productos_no_asignados_a_envios())
+
+                # Preguntar al usuario si quiere enviar el camión
+                print("¿Desea enviar el camión? (1. Sí / 2. No): ")
+                opcion_envio = int(input())
+                
+                if opcion_envio == 1:
+                    # Cambiar estado de disponibilidad del camión
+                    camion_asignado.disponibilidad = False
+                    Camion.camiones.append(camion_asignado)
+                    Camion.camiones.remove(camion_asignado)
+                    camion_asignado.disponibilidad = False
+                    print("El camión ha sido enviado.")
+                else:
+                    # Preguntar si quiere realizar otro envío
+                    print("¿Desea realizar otro envío? (1. Sí / 2. No): ")
+                    opcion_otro_envio = int(input())
+                    
+                    if opcion_otro_envio == 1:
+                        asignar_envio_camion_ui()  # Volver a ejecutar la función
+                    else:
+                        print("Hasta luego.")
+            else:
+                print("Selección no válida. Por favor, elija un número de camión válido.")
+        else:
+            print("Selección no válida. Por favor, elija un número de envío válido.")
+
+    except ValueError:
+        print("Entrada no válida. Ingrese un número entero válido.")
+
+    
+
 
 # Asegúrate de que la función scan() esté definida
 def scan():
@@ -145,7 +365,19 @@ while True:
     elif opcion == 2:
         venta_por_encargo_ui()
     elif opcion == 3:
-        pass
-    elif opcion == 4:
         cambiar_lista_produccion_diaria_ui()
+    elif opcion == 4:
+        agregar_producto_ui()
+    elif opcion == 5:
+        eliminar_producto_ui()
+    elif opcion == 6:
+        asignar_envio_camion_ui()
+    elif opcion == 7:
+        pass
+    
+        
     # Asegúrate de que las funciones para las opciones 5, 6, 7 y 8 estén definidas
+    
+    
+    
+    

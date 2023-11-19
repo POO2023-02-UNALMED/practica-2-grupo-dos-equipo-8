@@ -24,6 +24,7 @@ class Envio:
             peso_total += producto.get_peso()
         self.peso_total = peso_total
         Envio.lista_envios_no_asignados.append(self)
+        self.asignado_a_un_camion = False
         # Los envíos deben efectuar cambios en la bodega y caja
 
     # Devuelve aquellos envíos que no han sido asignados, importantes para la funcionalidad 5
@@ -33,7 +34,6 @@ class Envio:
         numeracion = 1
 
         for envio in cls.lista_envios_no_asignados:
-            if not envio.asignado_a_un_camion:
                 result += f"{numeracion}. Envío con código {envio.get_codigo_de_envio()}, con un peso de {envio.get_peso_total()}\n"
                 numeracion += 1
 

@@ -36,11 +36,11 @@ class Bodega:
         
         return resultado
 
-    def productosNoAsignadosAEnvios(self):
+    def productos_no_asignados_a_envios(self):
         resultado = ""
         
         for producto in self.productos:
-            if not producto.isAsignadoAEnvio():
+            if not producto.asignado_a_envio:
                 resultado += str(producto) + "\n"
         
         return resultado

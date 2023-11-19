@@ -17,9 +17,9 @@ class Producto:
         self.ID = ID
         self.peso = peso
         self.diasBodega = 0
-        self.asignadoAEnvio = False
+        self.asignado_a_envio = False
 
-    def listarIngredientesNecesarios(self):
+    def listar_ingredientes_necesarios(self):
         result = ""
         for ingrediente, cantidad in self.ingredientes_necesarios.items():
             result += f"Necesita la cantidad de {cantidad} {ingrediente.nombre}.\n"
@@ -32,18 +32,18 @@ class Producto:
         return precio
 
     def __str__(self):
-        saltoLinea = "\n"
-        result = "-" * 50 + saltoLinea
-        result += f"Nombre: {self.getNombre()}{saltoLinea}"
-        result += f"Espacio almacenamiento: {self.getEspacioAlmacenamiento()}{saltoLinea}"
-        result += f"ID: {self.getID()}{saltoLinea}"
+        salto_linea = "\n"
+        result = "-" * 50 + salto_linea
+        result += f"Nombre: {self.get_nombre()}{salto_linea}"
+        result += f"Espacio almacenamiento: {self.get_espacio_almacenamiento()}{salto_linea}"
+        result += f"ID: {self.get_ID()}{salto_linea}"
         result += "Ingredientes Necesarios: \n"
-        ingredientesNecesarios = self.listarIngredientesNecesarios().split(saltoLinea)
+        ingredientesNecesarios = self.listar_ingredientes_necesarios().split(salto_linea)
         for ingrediente in ingredientesNecesarios:
             result += f"\t{ingrediente}\n"
-        result += f"Precio: {self.getPrecio()}{saltoLinea}"
-        result += f"Peso: {self.getPeso()}{saltoLinea}"
-        result += f"Días en bodega: {self.getDiasBodega()}{saltoLinea}"
+        result += f"Precio: {self.get_precio()}{salto_linea}"
+        result += f"Peso: {self.get_peso()}{salto_linea}"
+        result += f"Días en bodega: {self.get_dias_bodega()}{salto_linea}"
         return result
 
     @abstractmethod
@@ -93,10 +93,10 @@ class Producto:
         self.diasBodega = diasBodega
         
     def is_asignado_a_envio(self):
-        return self.asignadoAEnvio
+        return self.asignado_a_envio
     
-    def set_asignado_a_envio(self, asignadoAEnvio):
-        self.asignadoAEnvio = asignadoAEnvio
+    def set_asignado_a_envio(self, asignado_a_envio):
+        self.asignado_a_envio = asignado_a_envio
         
     def get_tipo(self):
         return self.tipo

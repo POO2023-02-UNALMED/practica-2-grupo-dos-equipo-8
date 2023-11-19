@@ -181,7 +181,46 @@ class Administrador:
         fabrica.finalizarProduccion(produccion_diaria)
         caja=Caja(10000)
 
-        administrador = Administrador(bodega, caja, Camion.camiones, fabrica)
+        
+        
+        marcas = [
+            "CamionetaMax", "SuperTruck", "RapidCargo", "MegaHauler", "PowerMover",
+            "CargoKing", "TurboTransit", "Speedster", "CargoMaster", "SwiftHaul"
+        ]
+
+        modelos = [
+            "X1", "A2", "Pro100", "MegaTruck", "UltraCargo",
+            "SpeedyXpress", "Transporter3000", "SuperLoad", "CargoBeast", "QuickHauler"
+        ]
+
+        placas = [
+            "ABC-123", "DEF-456", "GHI-789", "JKL-012", "MNO-345",
+            "PQR-678", "STU-901", "VWX-234", "YZA-567", "BCD-890"
+        ]
+
+        # Creamos 10 camiones
+        camiones = []
+        for i in range(10):
+            marca = marcas[i]
+            modelo = modelos[i]
+            capacidad = 1500  # Capacidad ficticia
+            placa = placas[i]
+
+            camion = Camion(marca, modelo, capacidad, placa)
+            camiones.append(camion)
+
+        # Creamos 5 Envíos
+        envios = []
+        for i in range(1, 6):
+            # Suponiendo que bodega y caja están ya definidos en tu código
+            productos_envio = [bodega.productos[0]]  # Agregamos el primer producto de la bodega al envío
+            envio = Envio(i, productos_envio, caja, bodega)
+            envios.append(envio)
+            Envio.lista_envios_no_asignados = envios
+        
+        
+        
+        administrador = Administrador(bodega, caja,camiones, fabrica)
         return administrador
 
     @staticmethod
