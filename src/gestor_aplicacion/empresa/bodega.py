@@ -20,7 +20,7 @@ class Bodega:
         resultado = "Contabilidad de Ingredientes:\n"
         numeracion = 1
         
-        for ingrediente, cantidad in self.contabilidadIngredientes.items():
+        for ingrediente, cantidad in self.contabilidad_ingredientes.items():
             resultado += f"{numeracion}. {ingrediente} : {cantidad}\n"
             numeracion += 1
         
@@ -50,29 +50,28 @@ class Bodega:
             ingredienteSeleccionado = Ingrediente.get_ingredientes_disponibles()[opcion - 1]
             nombreIngrediente, precioIngrediente = ingredienteSeleccionado.get_nombre(), ingredienteSeleccionado.get_precio()
 
-            if nombreIngrediente not in self.contabilidadIngredientes:
-                self.contabilidadIngredientes[nombreIngrediente] = 0
+            if nombreIngrediente not in self.contabilidad_ingredientes:
+                self.contabilidad_ingredientes[nombreIngrediente] = 0
 
             for _ in range(cantidadPedida):
                 nuevoIngrediente = Ingrediente(nombreIngrediente)
                 self.ingredientes.append(nuevoIngrediente)
-                self.contabilidadIngredientes[nombreIngrediente] += 1
+                self.contabilidad_ingredientes[nombreIngrediente] += 1
 
             administrador.get_caja().restar_dinero(precioIngrediente * cantidadPedida)
             mensaje = "Se ha realizado el pedido con éxito.\n"
-            mensaje += f"Nueva cantidad de {nombreIngrediente}: {self.contabilidadIngredientes[nombreIngrediente]}"
+            mensaje += f"Nueva cantidad de {nombreIngrediente}: {self.contabilidad_ingredientes[nombreIngrediente]}"
             return mensaje
 
         except IndexError:
             return "Opción no válida. Seleccione un ingrediente disponible."
-        except Exception as e:
-            return f"Ha ocurrido un error: {e}. Inténtelo de nuevo más tarde."
+        
 
 
     def mostrar_ingredientes_escasos(self):
         resultado = "Ingredientes escasos:\n"
 
-        for ingrediente, cantidad in self.contabilidadIngredientes.items():
+        for ingrediente, cantidad in self.contabilidad_ingredientes.items():
             if cantidad < 10:
                 resultado += f"{ingrediente}: {cantidad}\n"
 

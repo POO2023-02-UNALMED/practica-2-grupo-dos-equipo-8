@@ -65,7 +65,7 @@ class Administrador:
 
         # Crear instancias de los ingredientes
         harina = Ingrediente("harina", 5, 1234, 10)
-        azucar = Ingrediente("azúcar", 3, 1234, 5)
+        azucar = Ingrediente("azucar", 3, 1234, 5)
 
         # Agregar los ingredientes al diccionario de ingredientes de la torta
         ingredientes_torta[harina] = 1
@@ -87,11 +87,11 @@ class Administrador:
 
         # Crear instancias de los ingredientes
         harina2 = Ingrediente("harina", 5, 1234, 10)
-        azucar2 = Ingrediente("azúcar", 3, 1234, 5)
+        azucar2 = Ingrediente("azucar", 3, 1234, 5)
 
         # Agregar los ingredientes al diccionario de ingredientes de pasteles fritos
         ingredientes_pasteles_fritos[harina2] = 2  # Agrega 2 unidades de harina al pastel frito
-        ingredientes_pasteles_fritos[azucar2] = 1  # Agrega 1 unidad de azúcar al pastel frito
+        ingredientes_pasteles_fritos[azucar2] = 1  # Agrega 1 unidad de azucar al pastel frito
 
         # Crear el pastel frito con los ingredientes
         pastel_frito = PastelesFritos("pastelFrito", 5, ingredientes_pasteles_fritos, 20, "dfg123", 3, False, "tomate")
@@ -109,11 +109,11 @@ class Administrador:
 
         # Crear instancias de los ingredientes
         harina3 = Ingrediente("harina", 5, 1234, 10)
-        azucar3 = Ingrediente("azúcar", 3, 1234, 5)
+        azucar3 = Ingrediente("azucar", 3, 1234, 5)
 
         # Agregar los ingredientes al diccionario de ingredientes de las galletas
         ingredientes_galletas[harina3] = 2  # Agrega 2 unidades de harina a las galletas
-        ingredientes_galletas[azucar3] = 1  # Agrega 1 unidad de azúcar a las galletas
+        ingredientes_galletas[azucar3] = 1  # Agrega 1 unidad de azucar a las galletas
 
         # Crear las galletas con los ingredientes
         galletas = Galletas("galleta", 5, ingredientes_galletas, 20, "dfg123", 3, False, "vainilla")
@@ -131,11 +131,11 @@ class Administrador:
 
         # Crear instancias de los ingredientes
         harina4 = Ingrediente("harina", 5, 1234, 10)
-        azucar4 = Ingrediente("azúcar", 3, 1234, 5)
+        azucar4 = Ingrediente("azucar", 3, 1234, 5)
 
         # Agregar los ingredientes al diccionario de ingredientes de las donas
         ingredientes_donas[harina4] = 2  # Agrega 2 unidades de harina a las donas
-        ingredientes_donas[azucar4] = 1  # Agrega 1 unidad de azúcar a las donas
+        ingredientes_donas[azucar4] = 1  # Agrega 1 unidad de azucar a las donas
 
         # Crear la dona con los ingredientes
         dona = Donas("dona", 5, ingredientes_donas, 20, "dfg123", 3, False, "arequipe")

@@ -45,8 +45,8 @@ def ingresar():
             self.permitir_cambios=permitir_cambios
             self.criterio=criterio
             label_petición=Label(frame_dialogo,text=criterio)
-            comobo_box=ttk.Combobox(frame_dialogo,values=criterios)
-            comobo_box.set(valor_inicial)
+            combo_box=ttk.Combobox(frame_dialogo,values=criterios)
+            combo_box.set(valor_inicial)
             def enviar():
                 if self.permitir_cambios==True:
                     respuesta=comobo_box.get()
