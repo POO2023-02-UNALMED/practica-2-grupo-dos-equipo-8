@@ -236,3 +236,31 @@ class Administrador:
                 print("Selección no válida. Por favor, elija un número de envío válido.")
         except ValueError:
             print("Entrada no válida. Ingrese un número entero válido")
+            
+            
+    #Getters y Setters 
+    def get_bodega(self):
+        return self.bodega
+    
+    def set_bodega(self, bodega):
+        self.bodega = bodega
+        
+    def get_caja(self):
+        return self.caja
+    
+    def set_caja(self, caja):
+        self.caja = caja
+    
+    def get_camiones(self):
+        return self.camiones
+    
+    def set_camiones(self, camiones):
+        self.camiones = camiones
+        
+    def get_fabrica(self):
+        return self.fabrica
+    
+    def set_fabrica(self, fabrica):
+        self.fabrica = fabrica
+            
+            

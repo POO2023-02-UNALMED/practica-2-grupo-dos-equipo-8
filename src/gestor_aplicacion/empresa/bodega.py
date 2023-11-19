@@ -16,7 +16,7 @@ class Bodega:
         for ingrediente in ingredientes:
             self.espacioAlmacenamiento -= ingrediente.espacio_almacenamiento
     
-    def mostrarContabilidadIngredientes(self):
+    def mostrar_contabilidad_ingredientes(self):
         resultado = "Contabilidad de Ingredientes:\n"
         numeracion = 1
         
@@ -26,7 +26,7 @@ class Bodega:
         
         return resultado
 
-    def mostrarProductos(self):
+    def mostrar_productos(self):
         resultado = ""
         indice = 1
         
@@ -45,10 +45,10 @@ class Bodega:
         
         return resultado
 
-    def pedirCantidadIngrediente(self, opcion, cantidadPedida, administrador):
+    def pedir_cantidad_ingrediente(self, opcion, cantidadPedida, administrador):
         try:
-            ingredienteSeleccionado = Ingrediente.getIngredientesDisponibles()[opcion - 1]
-            nombreIngrediente, precioIngrediente = ingredienteSeleccionado.getNombre(), ingredienteSeleccionado.getPrecio()
+            ingredienteSeleccionado = Ingrediente.get_ingredientes_disponibles()[opcion - 1]
+            nombreIngrediente, precioIngrediente = ingredienteSeleccionado.get_nombre(), ingredienteSeleccionado.get_precio()
 
             if nombreIngrediente not in self.contabilidadIngredientes:
                 self.contabilidadIngredientes[nombreIngrediente] = 0
@@ -58,7 +58,7 @@ class Bodega:
                 self.ingredientes.append(nuevoIngrediente)
                 self.contabilidadIngredientes[nombreIngrediente] += 1
 
-            administrador.getCaja().restarDinero(precioIngrediente * cantidadPedida)
+            administrador.get_caja().restar_dinero(precioIngrediente * cantidadPedida)
             mensaje = "Se ha realizado el pedido con éxito.\n"
             mensaje += f"Nueva cantidad de {nombreIngrediente}: {self.contabilidadIngredientes[nombreIngrediente]}"
             return mensaje
@@ -69,7 +69,7 @@ class Bodega:
             return f"Ha ocurrido un error: {e}. Inténtelo de nuevo más tarde."
 
 
-    def mostrarIngredientesEscasos(self):
+    def mostrar_ingredientes_escasos(self):
         resultado = "Ingredientes escasos:\n"
 
         for ingrediente, cantidad in self.contabilidadIngredientes.items():

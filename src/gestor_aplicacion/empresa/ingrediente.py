@@ -5,7 +5,7 @@ from gestor_aplicacion.producto.i_producto_ingrediente import IProductoIngredien
 class Ingrediente(IProductoIngrediente):
     ingredientes_disponibles = []
 
-    def __init__(self, nombre, precio_base, identificador=None, espacio_almacenamiento=None):
+    def __init__(self, nombre, precio_base=None, identificador=None, espacio_almacenamiento=None):
         self.nombre = nombre
         self.cantidad = 0
 
@@ -36,7 +36,7 @@ class Ingrediente(IProductoIngrediente):
         numeracion = 1
 
         for ingrediente in Ingrediente.ingredientes_disponibles:
-            resultado += f"{numeracion}. {ingrediente.nombre} - precio: ${ingrediente.precio} - Espacio de almacenamiento: {ingrediente.espacioAlmacenamiento}\n"
+            resultado += f"{numeracion}. {ingrediente.nombre} - precio: ${ingrediente.precio} - Espacio de almacenamiento: {ingrediente.espacio_almacenamiento}\n"
             numeracion += 1
 
         return resultado
@@ -44,3 +44,36 @@ class Ingrediente(IProductoIngrediente):
     def calcular_precio(self, precioBase):
         p = precioBase * 1.19
         return round(p)
+    
+    def get_nombre(self):
+        return self.nombre
+    
+    def ser_nombre(self, nombre):
+        self.nombre = nombre
+        
+    def get_precio(self):
+        return self.precio
+    
+    def set_precio(self, precio):
+        self.precio = precio
+        
+    def get_cantidad(self):
+        return self.cantidad
+    
+    def set_cantidad(self, cantidad):
+        self.cantidad = cantidad
+    
+    def get_identificador(self):
+        return self.identificador
+    
+    def set_identificador(self, identificador):
+        self.identificador = identificador
+        
+    def get_espacio_almacenamiento(self):
+        return self.espacio_almacenamiento
+    
+    def set_espacio_almacenamiento(self, espacio_almacenamiento):
+        self.espacio_almacenamiento = espacio_almacenamiento
+        
+    def get_ingredientes_disponibles():
+        return Ingrediente.ingredientes_disponibles
