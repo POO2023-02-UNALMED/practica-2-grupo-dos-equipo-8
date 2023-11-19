@@ -113,24 +113,52 @@ def venta_por_encargo_ui():
 #--------------------------------------------------------------------------------------------------------------------
 #Funcionalidad 3
 def cambiar_lista_produccion_diaria_ui():
-    # Pedir al usuario que ingrese una nueva lista de producción diaria
-    print("Ingrese una nueva lista de producción diaria (Ejemplo: 2 5 3 4): ")
-    nueva_lista_produccion = input().split()
-    
-    # Validar que la nueva lista tenga la misma cantidad de elementos que la lista actual
-    if len(nueva_lista_produccion) != len(administrador.bodega.lista_produccion_diaria):
-        print("La nueva lista debe contener la misma cantidad de elementos que la lista actual.")
+    print("Producción diaria actual:")
+    print(administrador.get_fabrica().listar_lista_de_produccion())
+
+    print("Ingrese el número correspondiente al producto para cambiar la producción:")
+    producto_seleccionado = administrador.get_fabrica().producto_para_cambiar_en_lista(int(input()))
+    nueva_cantidad = int(input("Ingrese la nueva cantidad de producción para el producto seleccionado:"))
+
+    if administrador.get_bodega().disponibilidad_bodega(administrador.get_fabrica().get_produccion_diaria()):
+        administrador.get_fabrica().cambiar_produccion(producto_seleccionado, nueva_cantidad)
+        administrador.get_caja().actualizar_costos_produccion(producto_seleccionado, nueva_cantidad)
+
+        print("Listado de producción diaria actualizada:")
+        print(administrador.get_fabrica().listar_lista_de_produccion())
+
+        print("Fabricando tanda...")
+        resultado_fabricacion = administrador.get_fabrica().fabricar_tanda_productos(nueva_cantidad)
+
+        if resultado_fabricacion == 1:
+            print("No hay suficiente cantidad de ingredientes en bodega.")
+
+        elif resultado_fabricacion == 0:
+            print("No hay suficiente espacio en bodega para más productos")
+            if administrador.get_fabrica().transferir_produccion_otra_bodega(
+                administrador.get_fabrica().get_produccion_diaria()
+            ):
+                print("Se ha transferido la producción de la tanda a otra bodega")
+                print(administrador.get_fabrica().gestionar_espacio_bodega(administrador.get_fabrica().get_produccion_diaria()))
+                administrador.get_bodega().guardar_en_bodega(administrador.get_fabrica().get_produccion_diaria())
+                numero_tanda = Fabrica.get_codigo_tanda_actual()
+                print("El codigo de la tanda es " + numero_tanda)
+            else:
+                print("No hay bodegas disponibles para transferir productos")
+        elif resultado_fabricacion == 2:
+            print("Tanda creada exitosamente")
+            administrador.get_bodega().descontar_materia_prima_necesaria(
+                producto_seleccionado.get_ingredientes_necesarios(), nueva_cantidad
+            )
+            administrador.get_caja().descontar_valor_lista(administrador.get_fabrica().get_produccion_diaria())
+            print(administrador.get_fabrica().establecer_tiempo_demora_produccion(nueva_cantidad))
+            print(administrador.get_fabrica().gestionar_espacio_bodega(administrador.get_fabrica().get_produccion_diaria()))
+            administrador.get_bodega().guardar_en_bodega(administrador.get_fabrica().get_produccion_diaria())
+            numero_tanda = Fabrica.get_codigo_tanda_actual()
+            print("El codigo de la tanda es " + numero_tanda)
     else:
-        try:
-            # Convertir los elementos de la nueva lista a enteros
-            nueva_lista_produccion = [int(produccion) for produccion in nueva_lista_produccion]
+        print("La nueva lista de Producción Diaria es demasiado grande para la capacidad de la Bodega. Por favor, elija valores menores y tenga en cuenta el espacio que ocupa cada tipo de producto.")
 
-            # Actualizar la lista de producción diaria
-            administrador.bodega.lista_produccion_diaria = nueva_lista_produccion
-
-            print("La lista de producción diaria se ha actualizado correctamente.")
-        except ValueError:
-            print("Asegúrese de ingresar números enteros separados por espacios.")
  #----------------------------------------------------------------------------------------------------------------------------           
 #FUNCIONALIDAD 4            
 def agregar_producto_ui():
@@ -339,7 +367,26 @@ def asignar_envio_camion_ui():
     except ValueError:
         print("Entrada no válida. Ingrese un número entero válido.")
 
-    
+def cambiar_produccion_ventas_ui():
+    print("Descripcion: Cambia automaticamente el nivel de produccion en base a las ventas de un producto y/o el precio de un producto en base a los dias que lleva en bodega")
+    print("¿Esta de acuerdo? 1. Si / 2. No")
+    opcion = int(input())
+
+    if opcion == 1:
+        print("Desea cambiar la produccion de los productos?:")
+        cambio_produccion = input().lower() == "si"
+
+        print("Desea cambiar el precio de los productos?:")
+        cambio_precio = input().lower() == "si"
+
+        print(administrador.bodega.actualizar_produccion_precio(cambio_produccion, cambio_precio, administrador.fabrica))
+
+        print("Tabla de productos con precios actualizados")
+        imprimir_lista_productos()
+    elif opcion == 2:
+        print("No se ha realizado ningun cambio.")
+    else:
+        print("No seleccionaste ninguna opcion.")
 
 
 # Asegúrate de que la función scan() esté definida
@@ -373,7 +420,10 @@ while True:
     elif opcion == 6:
         asignar_envio_camion_ui()
     elif opcion == 7:
-        pass
+        cambiar_produccion_ventas_ui()
+    elif opcion == 8:
+        print("Hasta luego.")
+        break
     
         
     # Asegúrate de que las funciones para las opciones 5, 6, 7 y 8 estén definidas

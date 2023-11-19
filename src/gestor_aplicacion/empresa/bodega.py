@@ -94,18 +94,18 @@ class Bodega:
         productos_ordenados.sort(key=lambda p: p.get_dias_bodega(), reverse=True)
         return productos_ordenados
 
-    def actualizarProduccionPrecio(self, actualizarProduccion=False, actualizarPrecio=False, fabrica=None):
+    def actualizar_produccion_precio(self, actualizarProduccion=False, actualizarPrecio=False, fabrica=None):
         mensaje = ""
         
         if actualizarProduccion:
-            mensaje += self.actualizarProduccionBaseVentas(fabrica) + "\n"
+            mensaje += self.actualizar_produccion_base_ventas(fabrica) + "\n"
 
         if actualizarPrecio:
-            mensaje += self.actualizarPrecioBaseDiasBodega() + "\n"
+            mensaje += self.actualizar_precio_base_bodega() + "\n"
 
         return mensaje
 
-    def actualizarProduccionBaseVentas(self, fabrica):
+    def actualizar_produccion_base_ventas(self, fabrica):
         try:
             productos = Caja.historialVentasOrganizado()
             produccion = fabrica.getProduccionDiaria()
@@ -125,7 +125,7 @@ class Bodega:
         except Exception:
             return "Ocurrió un error al actualizar la producción."
 
-    def actualizarPrecioBaseDiasBodega(self):
+    def actualizar_precio_base_bodega(self):
         try:
             productos = self.productos_ordenados_por_dias_bodega()
 
@@ -138,24 +138,24 @@ class Bodega:
         except Exception:
             return "Ha ocurrido un error."
 
-    def guardarEnBodega(self, tanda):
+    def guardar_en_bodega(self, tanda):
         for producto, cantidad in tanda.items():
             nombre_producto = producto.get_nombre()
             if nombre_producto in self.contabilidadProductos:
-                cantidadActual = self.contabilidadProductos[nombre_producto]
-                self.contabilidadProductos[nombre_producto] = cantidadActual + cantidad
+                cantidad_actual = self.contabilidadProductos[nombre_producto]
+                self.contabilidadProductos[nombre_producto] = cantidad_actual + cantidad
             else:
                 self.contabilidadProductos[nombre_producto] = cantidad
 
-    def verificarTandaBodega(self, tanda):
+    def verificar_tanda_bodega(self, tanda):
         suma = sum(cantidad for cantidad in tanda.values())
-        return suma <= self.espacioAlmacenamiento
+        return suma <= self.espacio_almacenamiento
 
-    def disponibilidadBodega(self, tanda):
+    def disponibilidad_bodega(self, tanda):
         suma = sum(cantidad for cantidad in tanda.values())
-        return suma < self.espacioAlmacenamiento / 5
+        return suma < self.espacio_almacenamiento / 5
 
-    def descontarMateriaPrimaNecesaria(self, ingredientesRequeridos, cantidadProduccion):
+    def descontar_materia_prima_necesaria(self, ingredientesRequeridos, cantidadProduccion):
         mensaje = ""
         try:
             inventarioIngredientes = self.ingredientes
@@ -185,7 +185,7 @@ class Bodega:
         return mensaje
 
     def get_espacio_almacenamiento(self):
-        return self.espacioAlmacenamiento
+        return self.espacio_almacenamiento
     
     def set_espacio_almacenamiento(self, espacio_almacenamiento):
         self.espacio_almacenamiento = espacio_almacenamiento
