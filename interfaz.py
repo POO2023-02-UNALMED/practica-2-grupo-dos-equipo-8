@@ -113,7 +113,82 @@ def ingresar():
                     elif etapa==3:
                         cantidad=self.nuevo_valor.get()
                         label_informacion.config(text=administrador.bodega.pedir_cantidad_ingrediente(int(seleccion), int(cantidad), administrador))
+                        etapa+=1
+                    else:
+                        pass
                 
+                boton_confirmación.config(command=enviar)
+            
+            elif funcionalidad=="funcionalidad2":
+                etapa=0
+                codigo=None
+                primera_vez=True
+                # Crear una lista para almacenar los productos seleccionados
+                productos_seleccionados = []
+
+                 # Variable para controlar si el cliente quiere seleccionar más productos
+                seleccionar_otro_producto = True
+                def enviar():
+                    nonlocal etapa, codigo, primera_vez
+                    if etapa==0:
+                        if self.combo_box.get()=="1":
+                            self.combo_box.destroy()
+                            self.label_petición.config(text="Ingrese un código de envío (número entero):")
+                            self.nuevo_valor=Entry(frame_dialogo)
+                            self.nuevo_valor.grid(row=0,column=1,padx=10,pady=50)
+                            etapa+=1
+                        elif self.combo_box.get()=="2":
+                            self.label_petición.config(text="Hasta luego, hablanos cuando estes listo para realizar una venta por encargo, selecciona otra funcionalidad para hacer otros cambios")
+                            self.combo_box.state(["disabled"])
+                            label_informacion.config(text="Esperamos vuelvas pronto",borderwidth=2,relief="solid")
+                    elif etapa==1:
+                        
+                        if primera_vez==True:
+                            codigo=self.nuevo_valor.get()
+                            self.nuevo_valor.destroy()
+                            self.label_petición.config(text="Elija un producto ingresando el número correspondiente:")
+                            self.nuevo_combo_box=ttk.Combobox(frame_dialogo,values=list(range(1, len(administrador.bodega.productos) + 1)))
+                            self.nuevo_combo_box.grid(row=0,column=1,padx=10,pady=50)
+                            label_informacion.config(text=administrador.bodega.mostrar_productos(),borderwidth=2,relief="solid")
+                            
+                            primera_vez=False
+                        elif primera_vez==False:
+                            self.label_petición.config(text="Elija un producto ingresando el número correspondiente:")
+                            label_informacion.config(text=administrador.bodega.mostrar_productos(),borderwidth=2,relief="solid")
+                            self.nuevo_combo_box.config(values=list(range(1, len(administrador.bodega.productos) + 1)))
+                            self.nuevo_combo_box.state(["!disabled"])
+                        etapa+=1
+                    elif etapa==2:
+                        seleccion=self.nuevo_combo_box.get()
+                        producto_elegido=administrador.bodega.productos[int(seleccion)-1]
+                        if seleccion not in productos_seleccionados:
+                            productos_seleccionados.append(producto_elegido)
+                            self.label_petición.config(text=f"Has elegido el producto: {producto_elegido.nombre}"+"\n¿Desea seleccionar otro producto? (1.Si / 2.No):")
+                            self.nuevo_combo_box.config(values=["1","2"])
+                            etapa+=1
+                        else:
+                            self.label_petición.config(text="El producto ya ha sido seleccionado, por favor elija otro")
+                            self.nuevo_combo_box.config(values=list(range(1, len(administrador.bodega.productos) + 1)))
+
+                    elif etapa==3:
+                        if self.nuevo_combo_box.get()=="1":
+                            etapa=1
+                            self.label_petición.config(text="Me alegra que quieras seleccionar otro producto, por favor derle click en enviar para confirmar")
+                            self.nuevo_combo_box.state(["disabled"])
+
+                        elif self.nuevo_combo_box.get()=="2":
+                            nuevo_envio=Envio(int(codigo),productos_seleccionados,administrador.caja,administrador.bodega)
+                            self.nuevo_combo_box.destroy()
+                            self.label_petición.destroy()
+                            boton_confirmación.destroy()
+                            label_informacion.config(text=f"Se ha creado un nuevo envío con código {nuevo_envio.codigo_de_envio} y los productos seleccionados.",borderwidth=2,relief="solid")
+                            
+                                            
+                            
+                   
+                       
+
+
                 boton_confirmación.config(command=enviar)
             
     
@@ -191,6 +266,7 @@ def ingresar():
         label_nombre.config(text="Venta por encargo",borderwidth=2,relief="solid")
         label_descripción.config(text=("Para definir ventas por encargo, se debe tener en cuenta que una venta por encargo es creada por el administrado"
                                  +"\n segun una peticion previa del cliente , los productos serán encargados a bodega y los asignará a un envio especifico"),borderwidth=2,relief="solid")
+        FieldFrame("¿Estas listo para realizar una venta por encargo? (1.Si / 2.No): ",[1,2],"valor predeterminado",True,"funcionalidad2")
 
         
     
