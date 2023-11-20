@@ -112,7 +112,6 @@ def ingresar():
                         etapa+=1
                     elif etapa==3:
                         cantidad=self.nuevo_valor.get()
-                        label_informacion.config(text=administrador.bodega.pedir_cantidad_ingrediente(int(seleccion), int(cantidad), administrador))
                         etapa+=1
                     else:
                         pass
@@ -183,13 +182,101 @@ def ingresar():
                             boton_confirmación.destroy()
                             label_informacion.config(text=f"Se ha creado un nuevo envío con código {nuevo_envio.codigo_de_envio} y los productos seleccionados.",borderwidth=2,relief="solid")
                             
-                                            
+                boton_confirmación.config(command=enviar)
+
+
+            elif funcionalidad=="funcionalidad3":
+                boton_confirmación.config(command=enviar)
+                pass
+
+            elif funcionalidad=="funcionalidad4":
+                boton_confirmación.config(command=enviar)
+                pass
+
+            elif funcionalidad=="funcionalidad5":
+                boton_confirmación.config(command=enviar)
+                pass
+
+            elif funcionalidad=="funcionalidad6":
+                etapa=0
+                envio_seleccionado=None
+                camion_seleccionado=None
+                def enviar():
+                    nonlocal etapa, envio_seleccionado, camion_seleccionado
+                    if etapa==-1:
+                        self.combo_box.state(["!disabled"])
+                        self.label_petición.config(text="Seleccione el número del envío que desea asignar a un camión:")
+                        self.combo_box.config(values=list(range(1, len(Envio.lista_envios_no_asignados) + 1)))
+                        label_informacion.config(text=Envio.envios_por_asignar(),borderwidth=2,relief="solid")
+                        etapa+=1
+
+                    elif etapa==0:
+                        envio_seleccionado=Envio.lista_envios_no_asignados[int(self.combo_box.get())-1]
+                        envio_seleccionado.asignado_a_un_camion=True
+                        self.label_petición.config(text="Seleccione el camión que desea asignar:")
+                        label_informacion.config(text=Camion.camiones_y_capacidad(envio_seleccionado.peso_total),borderwidth=2,relief="solid")
+                        self.combo_box.config(values=list(range(1, len(administrador.camiones) + 1)))
+                        etapa+=1
+                    elif etapa==1:
+                        camion_seleccionado=administrador.camiones[int(self.combo_box.get())-1]
+                        camion_seleccionado.agregar_envio(envio_seleccionado)
+                        envio_seleccionado.camion_asignado=camion_seleccionado
+                        envio_seleccionado.asignado_a_un_camion=True
+                        camion_seleccionado.capacidad-=envio_seleccionado.peso_total
+                        Envio.lista_envios_no_asignados.remove(envio_seleccionado)
+                        Envio.lista_envios_asignados.append(envio_seleccionado)
+                        label_informacion.config(text=f"Se ha asignado el envío {envio_seleccionado.codigo_de_envio} al camión{camion_seleccionado.marca} {camion_seleccionado.modelo} {camion_seleccionado.placa}",borderwidth=2,relief="solid")
+                        self.label_petición.config(text="¿Desea enviar el camión? (1. Sí / 2. No):")
+                        self.combo_box.config(values=["1","2"])
+                        etapa+=1
+
+                    elif etapa==2:
+                        if self.combo_box.get()=="1":
+                            camion_seleccionado.disponibilidad=False
+                            Camion.camiones.remove(camion_seleccionado)
+                            label_informacion.config(text=f"Se ha enviado el camión {camion_seleccionado.marca} {camion_seleccionado.modelo} {camion_seleccionado.placa}",borderwidth=2,relief="solid")
+                            self.label_petición.config(text="Hasta luego, seleccione otra funcionalidad si así lo desea")
+                            self.combo_box.state(["disabled"])
+                            pass
+                        elif self.combo_box.get()=="2":
+                            self.label_petición.config(text="¿Desea realizar otro envío? (1. Sí / 2. No):")
+                            self.combo_box.config(values=["1","2"])
+                            label_informacion.config(text="")
+                            etapa+=1
+
+                    elif etapa==3:
+                        if self.combo_box.get()=="1":
+                            self.label_petición.config(text="Estamos muy felices de que quieras realizar otro envío, por favor derle click en enviar para confirmar")
+                            self.combo_box.state(["disabled"])
+                            etapa=-1
+                        elif self.combo_box.get()=="2":
+                            self.label_petición.config(text="Hasta luego, seleccione otra funcionalidad si así lo desea")
+                            self.combo_box.state(["disabled"])
+                            label_informacion.config(text="Esperamos vuelvas pronto",borderwidth=2,relief="solid")
+                            pass
+
+
                             
-                   
-                       
+                            
+                            
+
+
+                    
+                        
+                    
+
+
+
+
+
+
+
 
 
                 boton_confirmación.config(command=enviar)
+
+            
+
             
     
     #Funcioon para error al ejecutar varias veces
@@ -301,7 +388,10 @@ def ingresar():
                                        "\n Se muestran envíos pendientes y camiones con espacio suficiente."+
                                        "\n Tras elegir un camión, se reduce su capacidad según el envío asignado, dejando espacio"+
                                        "\n adicional si se decide no ocupar todo. El camión se despacha y el envío se elimina de la lista."),borderwidth=2,relief="solid")
-
+        label_informacion.config(text="Estos son los envios pendientes por asignación:\n"+Envio.envios_por_asignar(),borderwidth=2,relief="solid")
+        
+                                       
+        FieldFrame("Seleccione el número del envío que desea asignar a un camión:",list(range(1, len(Envio.lista_envios_no_asignados) + 1)),"valor predeterminado",True,"funcionalidad6")
     def funcionalidad7():
         label_nombre.config(text="Cambiar la producción y/o ventas",borderwidth=2,relief="solid")
         label_descripción.config(text=( "El administrador visualiza la producción y puede ajustar precios y producción de productos."+
