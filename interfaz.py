@@ -187,7 +187,55 @@ def ingresar():
 
 
             elif funcionalidad=="funcionalidad3":
-                pass
+                etapa=0
+                producto_elegido=None
+                nueva_produccion=None
+                def enviar():
+                    nonlocal etapa,producto_elegido,nueva_produccion
+                    if etapa==0:
+                        producto_elegido=administrador.bodega.productos[int(self.combo_box.get())-1]
+                        label_informacion.config(text=f"El producto {producto_elegido.nombre} ",borderwidth=2,relief="solid")
+                        self.label_petición.config(text="Ingrese la nueva producción diaria del producto:")
+                        self.nuevo_valor=Entry(frame_dialogo)
+                        self.nuevo_valor.grid(row=0,column=1,padx=10,pady=50)
+                        self.combo_box.destroy()
+                        etapa+=1
+                    elif etapa==1:
+                        nueva_produccion=self.nuevo_valor.get()
+                        administrador.fabrica.produccion_diaria[producto_elegido]=int(nueva_produccion)
+                        label_informacion.config(text=f"""Se ha cambiado la producción diaria del producto  {producto_elegido.nombre} """)
+                        self.nuevo_valor.destroy()
+                        etapa+=1
+                    elif etapa==2:
+                        self.label_petición.config(text="Desea fabricar una tanda con los cambios realizados? (1.Si / 2.No):")
+                        self.nuevo_combo_box=ttk.Combobox(frame_dialogo,values=["1","2"])
+                        self.nuevo_combo_box.grid(row=0,column=1,padx=10,pady=50)
+                        label_informacion.config(text=administrador.fabrica.listar_lista_de_produccion(),borderwidth=2,relief="solid")
+                        etapa+=1
+                        
+                    elif etapa==3:
+                        if self.nuevo_combo_box.get()=="1":
+                            administrador.fabrica.finalizarProduccion(administrador.fabrica.produccion_diaria)
+                            self.label_petición.config(text="Se ha creado una tanda con los cambios realizados, por favor derle click en enviar para confirmar")
+                            self.nuevo_combo_box.state(["disabled"])
+                            etapa+=1
+                        elif self.nuevo_combo_box.get()=="2":
+                            self.label_petición.config(text="Hasta luego, seleccione otra funcionalidad si así lo desea")
+                            self.nuevo_combo_box.state(["disabled"])
+                            label_informacion.config(text="Esperamos vuelvas pronto",borderwidth=2,relief="solid")
+                            etapa+=1
+                            
+                    elif etapa==4:
+                        self.label_petición.destroy()
+                        self.combo_box.destroy()
+                        boton_confirmación.destroy()
+                        self.nuevo_combo_box.destroy()
+                        label_informacion.config(text="Esperamos vuelvas pronto",borderwidth=2,relief="solid")
+                        pass
+                boton_confirmación.config(command=enviar)
+                
+                
+                
 
             elif funcionalidad=="funcionalidad4":
                 etapa=0
@@ -595,7 +643,7 @@ def ingresar():
 
     #Frame_informacion estará a la derecha de frame_dialogo
     frame_inofrmacion=Frame(frame_dialogo)
-    frame_inofrmacion.grid(row=0,column=1,pady=200,padx=0)
+    frame_inofrmacion.grid(row=0,column=1,pady=180,padx=0)
 
     label_informacion=Label(frame_dialogo,text="",font=("Arial",12,"bold"))
     label_informacion.grid(row=0,column=0)  # Centrado en el frame_informacion12,"bold"))
@@ -636,8 +684,10 @@ def ingresar():
                                        "\n luego se inicia una tanda de producción identificada por un código. Si hay espacio, se añaden los productos."+
                                        "\n Si la bodega está llena, se detiene la producción y se sugiere enviarlos a otra bodega con capacidad."+
                                        "\n Esto asegura que la producción se ajuste al espacio disponible y evita interrupciones."),borderwidth=2,relief="solid")
-        label_informacion.config(text="La encargada de esta funcionalidad tuvo problemas familiares, por favor tener consideración",borderwidth=2,relief="solid")
-    
+        label_informacion.config(text="Estos son los productos disponibles:\n"+administrador.bodega.mostrar_productos(),borderwidth=2,relief="solid")    
+        FieldFrame("Ingrese el número correspondiente al producto para cambiar la producción:",list(range(1, len(administrador.bodega.productos) + 1)),"valor predeterminado",True,"funcionalidad3")
+        
+                   
     def funcionalidad4():
         label_nombre.config(text="Agregar producto",borderwidth=2,relief="solid")
         label_descripción.config(text=( "La opción permite agregar ingredientes, elegir ingredientes existentes, y crear un nuevo producto con ellos."+
