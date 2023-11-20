@@ -1,8 +1,29 @@
 from tkinter import * 
 from tkinter import messagebox
 from PIL import Image, ImageTk
-from field_frame import FieldFrame
 from tkinter import ttk
+import sys
+# Agregar la ruta del directorio 'src' al principio de sys.path
+sys.path.insert(0, './src')
+
+from gestor_aplicacion.empresa.envio import Envio
+from gestor_aplicacion.empresa.ingrediente import Ingrediente
+
+##from gestor_aplicacion.empresa.administrador import *
+##from gestor_aplicacion.producto.producto import *
+
+from gestor_aplicacion.empresa.administrador import Administrador
+from gestor_aplicacion.empresa.camion import Camion
+from gestor_aplicacion.empresa.bodega import Bodega
+from gestor_aplicacion.empresa.caja import Caja
+from gestor_aplicacion.producto.producto import Producto
+from gestor_aplicacion.producto.torta import Tortas
+from gestor_aplicacion.producto.dona import Donas
+from gestor_aplicacion.producto.pastel_frito import PastelesFritos
+from gestor_aplicacion.producto.galleta import Galleta
+
+administrador = Administrador.crear_todo()
+
 
 ventana_inicio = Tk()
 ventana_inicio.geometry("1500x1000")
@@ -35,33 +56,66 @@ def ingresar():
 
     #Clase FieldFrame   
     class FieldFrame(Frame):
-        def __init__(self,criterio,criterios,valor_inicial,permitir_cambios):
-            #Frame dialogos
-            frame_dialogo = Frame(ventana_principal,relief="solid",borderwidth=2) 
-            frame_dialogo.pack(pady=50)
-            # Ajustamos la grilla del frame_nombre
-            frame_dialogo.grid_rowconfigure(0, weight=1)
-            frame_dialogo.grid_columnconfigure(0, weight=1)
+        def __init__(self,criterio,criterios,valor_inicial,permitir_cambios,funcionalidad):
+            #Permite que se hagan cambios en el combo box
             self.permitir_cambios=permitir_cambios
+            #Elementos del combo box a elegir
             self.criterio=criterio
-            label_petición=Label(frame_dialogo,text=criterio)
-            combo_box=ttk.Combobox(frame_dialogo,values=criterios)
-            combo_box.set(valor_inicial)
-            def enviar():
-                if self.permitir_cambios==True:
-                    respuesta=combo_box.get()
-                    comobo_box.config(state="disabled")
-                    self.permitir_cambios=False
-                    return respuesta
-                
-            boton_confirmación=Button(frame_dialogo,text="Enviar",command=enviar)
-
-            label_petición.grid(row=0,column=0,padx=10,pady=50)
-            combo_box.grid(row=0,column=1,padx=10,pady=50)
-            boton_confirmación.grid(row=0,column=2,padx=10,pady=50)
+            #Pregunta al usuario
+            self.label_petición=Label(frame_dialogo,text=criterio)
+            #Combo box
+            self.combo_box=ttk.Combobox(frame_dialogo,values=criterios)
+            #valor inicial del combo box
+            self.combo_box.set(valor_inicial)
             
+            
+            #Posición de los elementos
+            self.label_petición.grid(row=0,column=0,padx=10,pady=50)
+            self.combo_box.grid(row=0,column=1,padx=10,pady=50)
+            boton_confirmación=Button(frame_dialogo,text="Enviar")
+            boton_confirmación.grid(row=0,column=2,padx=10,pady=50)
 
-
+            #Función del boton de confirmación
+            if funcionalidad=="funcionalidad1":
+                etapa=0
+                seleccion=None
+                def enviar():
+                    nonlocal etapa, seleccion
+                    if etapa==0:
+                        if self.combo_box.get()=="1":
+                            self.label_petición.config(text="""Aquí puede ver los ingredientes escasos,
+                                                    ¿Está seguro de que necesita comprar ingredientes? (1.Si / 2.No): """)
+                            label_informacion.config(text=administrador.bodega.mostrar_ingredientes_escasos(),borderwidth=2,relief="solid")
+                            etapa+=1
+                        if self.combo_box.get()=="2":
+                            self.label_petición.config(text="Hasta luego, seleccione otra funcionalidad si así lo desea")
+                            self.combo_box.state(["disabled"])
+                            label_informacion.config(text="Esperamos vuelvas pronto",borderwidth=2,relief="solid")
+                    
+                    elif etapa==1:
+                        if self.combo_box.get()=="1":
+                            self.label_petición.config(text="Seleccione el ingrediente que desea pedir:")
+                            self.combo_box.config(values=list(range(1, len(Ingrediente.ingredientes_disponibles) + 1)))
+                            label_informacion.config(text=Ingrediente.obtener_lista_ingredientes(),borderwidth=2,relief="solid")
+                            etapa+=1
+                        if self.combo_box.get()=="2":
+                            self.label_petición.config(text="Hasta luego, seleccione otra funcionalidad si así lo desea")
+                            self.combo_box.state(["disabled"])
+                            label_informacion.config(text="Esperamos vuelvas pronto",borderwidth=2,relief="solid")
+                    elif etapa==2:
+                        seleccion=self.combo_box.get()
+                        nombre_seleccionado=Ingrediente.ingredientes_disponibles[int(seleccion)-1].nombre
+                        self.combo_box.destroy()
+                        self.label_petición.config(text="Ingrese la cantidad que desea pedir de "+nombre_seleccionado+":")
+                        self.nuevo_valor=Entry(frame_dialogo)
+                        self.nuevo_valor.grid(row=0,column=1,padx=10,pady=50)
+                        etapa+=1
+                    elif etapa==3:
+                        cantidad=self.nuevo_valor.get()
+                        label_informacion.config(text=administrador.bodega.pedir_cantidad_ingrediente(int(seleccion), int(cantidad), administrador))
+                
+                boton_confirmación.config(command=enviar)
+            
     
     #Funcioon para error al ejecutar varias veces
     def cerrarVentana():
@@ -78,10 +132,8 @@ def ingresar():
 
     #Frame del nombre
     frame_nombre = Frame(ventana_principal) 
-    frame_nombre.pack(pady=50)
-    # Ajustamos la grilla del frame_nombre
-    frame_nombre.grid_rowconfigure(0, weight=1)
-    frame_nombre.grid_columnconfigure(0, weight=1)
+    frame_nombre.grid(row=0,column=0,pady=50,padx=50)
+    
 
     # Creamos el label y lo centramos en el frame_nombre
     label_nombre = Label(frame_nombre, text="",font=("Arial",25,"bold"))
@@ -89,19 +141,36 @@ def ingresar():
 
     
 
-
-
     #Frame de descripción
     frame_descripción = Frame(ventana_principal) 
-    frame_descripción.pack(pady=50)
-    # Ajustamos la grilla del frame_nombre
-    frame_descripción.grid_rowconfigure(0, weight=1)
-    frame_descripción.grid_columnconfigure(0, weight=1)
+    frame_descripción.grid(row=1,column=0,pady=50,padx=50)
+    
 
     # Creamos el label y lo centramos en el frame_nombre
     label_descripción = Label(frame_nombre, text="",font=("Arial",12,"bold"))
     label_descripción.grid(row=1, column=0, sticky="n",pady=50)  # Sticky north (arriba) 
 
+
+    #Frame de dialogo
+    frame_dialogo = Frame(ventana_principal,relief="solid",borderwidth=2) 
+    frame_dialogo.grid(row=1,column=0,pady=0,padx=0)
+    
+    
+
+    #Frame_informacion estará a la derecha de frame_dialogo
+    
+    frame_inofrmacion=Frame(frame_dialogo)
+    frame_inofrmacion.grid(row=0,column=3,pady=50,padx=0)
+    # Ajustamos la grilla del frame_nombre
+    frame_inofrmacion.grid_rowconfigure(0, weight=1)
+    frame_inofrmacion.grid_columnconfigure(0, weight=1)
+    
+    label_informacion=Label(frame_inofrmacion,text="",font=("Arial",12,"bold"))
+    label_informacion.grid(row=0,column=3,pady=50,padx=0)
+    
+   
+    
+    
     
     
     
@@ -111,7 +180,8 @@ def ingresar():
         label_descripción.config(text=(
             "La materia prima es escencial para la producción díaria y el funcionamiento de la empresa, para esto se verificará la disponibilidad en la bodega" 
             +"\n  las cantidades necesarias, verifica fondos y de todo estar bien realiza la compra"),borderwidth=2,relief="solid")
-        FieldFrame("prueba",[1,2,3],"valor predeterminado",True)
+        label_informacion.config(text=administrador.bodega.mostrar_contabilidad_ingredientes(),borderwidth=2,relief="solid")
+        FieldFrame("¿Cree necesario comprar ingredientes? (1.Si / 2.No): ",[1,2],"valor predeterminado",True,"funcionalidad1")
         
 
         
