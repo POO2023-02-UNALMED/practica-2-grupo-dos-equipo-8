@@ -256,7 +256,7 @@ def agregar_producto_ui():
         bodegatemporal3.productos = temp3
         administrador.bodega = bodegatemporal3
     elif tipo_producto == 4:
-        producto_creado = Galletas("galleta", 5, ingredientes_y_cantidad, 20, "dfg123", 3, False, "vainilla")
+        producto_creado = Galleta("galleta", 5, ingredientes_y_cantidad, 20, "dfg123", 3, False, "vainilla")
         print(f"Producto exitosamente creado: {producto_creado}")
         temp4 = administrador.bodega.productos[:]
         temp4.append(producto_creado)

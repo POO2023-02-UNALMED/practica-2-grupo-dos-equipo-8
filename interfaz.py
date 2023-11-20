@@ -375,8 +375,45 @@ def ingresar():
                 
 
             elif funcionalidad=="funcionalidad5":
+                etapa=0
+                producto_elegido=None
+                def enviar():
+                    nonlocal etapa,producto_elegido
+                    if etapa==0:
+                        producto_elegido=administrador.bodega.productos[int(self.combo_box.get())-1]
+                        self.label_petición.config(text=f"¿Seguro que desea eliminar el producto {producto_elegido.nombre}? (1.Sí / 2.No):" )
+                        self.combo_box.config(values=["1","2"])
+                        label_informacion.config(text=administrador.bodega.mostrar_productos(),borderwidth=2,relief="solid")
+                        etapa+=1
+                    elif etapa==1:
+                        if self.combo_box.get()=="1":
+                            administrador.bodega.productos.remove(producto_elegido)
+                            self.label_petición.config(text=f"Se ha eliminado el producto {producto_elegido.nombre}, por favor derle click en enviar para confirmar")
+                            label_informacion.config(text=administrador.bodega.mostrar_productos(),borderwidth=2,relief="solid")
+                            self.combo_box.state(["disabled"])
+                            etapa+=1
+                        elif self.combo_box.get()=="2":
+                            self.label_petición.config(text="No se elimino ningun producto, Hasta luego, seleccione otra funcionalidad si así lo desea")
+                            self.combo_box.state(["disabled"])
+                            label_informacion.config(text="Esperamos vuelvas pronto",borderwidth=2,relief="solid")
+                            etapa+=1
+                    elif etapa==2:
+                        self.label_petición.destroy()
+                        self.combo_box.destroy()
+                        boton_confirmación.destroy()
+                        label_informacion.config(text="Esperamos vuelvas pronto",borderwidth=2,relief="solid")
+                        etapa+=1
+                        
+                    elif etapa==3:
+                        pass
+                            
+                        
+                                           
+                
+                
+                
                 boton_confirmación.config(command=enviar)
-                pass
+                
 
             elif funcionalidad=="funcionalidad6":
                 etapa=0
@@ -613,10 +650,10 @@ def ingresar():
         label_nombre.config(text="Eliminar producto",borderwidth=2,relief="solid")
         label_descripción.config(text=( "La máquina muestra los productos disponibles con sus detalles. El cliente escribe el nombre del producto a eliminar y confirma la acción."+
                                        "\n ¨¨No¨¨ cancela la solicitud, mientras que ¨¨Sí¨¨ elimina el producto."+
-                                       "\n Si el nombre ingresado no coincide, se muestra un mensaje de error y "
+                                       "\n Si el nombre numero no coincide, se muestra un mensaje de error y "
                                        "finaliza el proceso de eliminación del producto."),borderwidth=2,relief="solid")
-        
-
+        label_informacion.config(text="Estos son los productos disponibles:\n"+administrador.bodega.mostrar_productos(),borderwidth=2,relief="solid")
+        FieldFrame("Por favor, escriba el numero del producto que desea eliminar: ",list(range(1, len(administrador.bodega.productos) + 1)),"valor predeterminado",True,"funcionalidad5")
     def funcionalidad6():
         label_nombre.config(text="Asignar envio y/o camion",borderwidth=2,relief="solid")
         label_descripción.config(text=( "El administrador asigna un envío a un camión disponible verificando su capacidad."+
