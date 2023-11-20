@@ -112,13 +112,13 @@ class Bodega:
 
             for i in range(len(productos)):
                 producto = productos[i]
-                if i != 0 and produccion.get(producto):
+                if i != 0 and produccion.get(producto) is not None:
                     if produccion.get(productoMayorVendido) > produccion.get(producto):
                         produccion[producto] = int(produccion[producto] * 0.85)
                     else:
                         produccion[producto] = int(produccion[producto] * 0.70)
             
-            fabrica.setProduccionDiaria(produccion)
+            fabrica.set_produccion_diaria(produccion)
             return "Producción actualizada en base a las ventas de los productos."
         
         except Exception:
