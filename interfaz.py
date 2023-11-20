@@ -57,6 +57,7 @@ def ingresar():
     #Clase FieldFrame   
     class FieldFrame(Frame):
         def __init__(self,criterio,criterios,valor_inicial,permitir_cambios,funcionalidad):
+            
             #Permite que se hagan cambios en el combo box
             self.permitir_cambios=permitir_cambios
             #Elementos del combo box a elegir
@@ -186,12 +187,192 @@ def ingresar():
 
 
             elif funcionalidad=="funcionalidad3":
-                boton_confirmación.config(command=enviar)
                 pass
 
             elif funcionalidad=="funcionalidad4":
+                etapa=0
+                nombre=None
+                precio=None
+                identificador=None
+                espacio_de_almacenamiento=None
+                cantidades=[]
+                ingredientes=[]
+                ingredientes_y_cantidad={}
+                self.nuevo_combo_box=ttk.Combobox(frame_dialogo,values=["1","2","3","4"])
+                ingrediente_elegido=None
+                def enviar():
+                    nonlocal etapa, nombre,precio,identificador,espacio_de_almacenamiento,cantidades,ingredientes,ingredientes_y_cantidad,ingrediente_elegido
+                    if etapa==0:
+                        if self.nuevo_combo_box.get()=="1":
+                            self.nuevo_valor.destroy()
+                            self.label_petición.config(text="Ingrese el nombre del nuevo ingrediente: ")
+                            self.combo_box.destroy()
+                            self.nuevo_valor=Entry(frame_dialogo)
+                            self.nuevo_valor.grid(row=0,column=1,padx=10,pady=50)
+                            etapa+=1
+                        elif self.combo_box.get()=="1":
+                            self.label_petición.config(text="Ingrese el nombre del nuevo ingrediente:")
+                            self.combo_box.destroy()
+                            self.nuevo_valor=Entry(frame_dialogo)
+                            self.nuevo_valor.grid(row=0,column=1,padx=10,pady=50)
+                            etapa+=1
+                        elif self.combo_box.get()=="2":
+                            self.label_petición.config(text="Oprima enviar para confirmar")
+                            self.combo_box.state(["disabled"])
+                            etapa=6
+                        
+                    elif etapa==1:
+                        nombre=self.nuevo_valor.get()
+                        self.nuevo_valor.destroy()
+                        self.label_petición.config(text="Ingrese el precio del nuevo producto:")
+                        self.nuevo_valor=Entry(frame_dialogo)
+                        self.nuevo_valor.grid(row=0,column=1,padx=10,pady=50)
+                        etapa+=1
+                        
+                    elif etapa==2:
+                        precio=self.nuevo_valor.get()
+                        self.nuevo_valor.destroy()
+                        self.label_petición.config(text="Ingrese el identificador del nuevo producto:")
+                        self.nuevo_valor=Entry(frame_dialogo)
+                        self.nuevo_valor.grid(row=0,column=1,padx=10,pady=50)
+                        etapa+=1
+                    
+                    elif etapa==3:
+                        identificador=self.nuevo_valor.get()
+                        self.nuevo_valor.destroy()
+                        self.label_petición.config(text="Ingrese el espacio de almacenamiento del nuevo producto:")
+                        self.nuevo_valor=Entry(frame_dialogo)
+                        self.nuevo_valor.grid(row=0,column=1,padx=10,pady=50)
+                        etapa+=1
+                        
+                    elif etapa==4:
+                        espacio_de_almacenamiento=self.nuevo_valor.get()
+                        self.nuevo_valor.destroy()
+                        self.label_petición.config(text="Quieres crear otro ingrediente? (1.Si / 2.No): ")
+                        self.nuevo_combo_box=ttk.Combobox(frame_dialogo,values=["1","2"])
+                        self.nuevo_combo_box.grid(row=0,column=1,padx=10,pady=50)
+                        etapa+=1
+                        
+                    elif etapa==5:
+                        if self.nuevo_combo_box.get()=="1":
+                            nuevo_ingrediente=Ingrediente(nombre,int(precio),identificador,espacio_de_almacenamiento)
+                            temporal = administrador.bodega.ingredientes[:]
+                            temporal.append(nuevo_ingrediente)
+                            self.label_petición.config(text="Se ha creado un nuevo ingrediente y se crara uno nuevo, por favor derle click en enviar para confirmar")
+                            self.nuevo_combo_box.state(["disabled"])
+                            etapa=0
+                        elif self.nuevo_combo_box.get()=="2":
+                            nuevo_ingrediente=Ingrediente(nombre,int(precio),identificador,espacio_de_almacenamiento)
+                            temporal = administrador.bodega.ingredientes[:]
+                            temporal.append(nuevo_ingrediente)
+                            self.label_petición.config(text="Se ha creado un nuevo ingrediente, por favor derle click en enviar para confirmar")
+                            self.nuevo_combo_box.state(["disabled"])
+                            etapa+=1
+                    elif etapa==6:
+                        self.label_petición.config(text="Seleccione el número correspondiente al ingrediente que necesita para su producto:")
+                        self.nuevo_combo_box.config(values=list(range(1, len(administrador.bodega.ingredientes) + 1)))
+                        label_informacion.config(text=Ingrediente.obtener_lista_ingredientes(),borderwidth=2,relief="solid")
+                        self.combo_box.destroy()
+                        self.nuevo_combo_box=ttk.Combobox(frame_dialogo,values=list(range(1, len(administrador.bodega.ingredientes) + 1)))
+                        self.nuevo_combo_box.grid(row=0,column=1,padx=10,pady=50)
+                        etapa+=1
+                        
+                    elif etapa==7:
+                        ingrediente_elegido=administrador.bodega.ingredientes[int(self.nuevo_combo_box.get())-1]
+                        ingredientes.append(ingrediente_elegido)
+                        self.label_petición.config(text="Ingrese la cantidad que necesita de este ingrediente:")
+                        self.nuevo_valor=Entry(frame_dialogo)
+                        self.nuevo_valor.grid(row=0,column=1,padx=10,pady=50)
+                        self.nuevo_combo_box.destroy()
+                        etapa+=1
+                        
+                    elif etapa==8:
+                        cantidad=self.nuevo_valor.get()
+                        cantidades.append(cantidad)
+                        ingredientes_y_cantidad[ingrediente_elegido]=int(cantidad)
+                        self.nuevo_valor.destroy()
+                        self.label_petición.config(text="Quieres agregar otro ingrediente? (1.Si / 2.No): ")
+                        self.nuevo_combo_box=ttk.Combobox(frame_dialogo,values=["1","2"])
+                        self.nuevo_combo_box.grid(row=0,column=1,padx=10,pady=50)
+                        etapa+=1
+                    
+                    elif etapa==9:
+                        if self.nuevo_combo_box.get()=="1":
+                            self.label_petición.config(text="Click para confirmar")
+                            self.nuevo_combo_box.state(["disabled"])
+                            etapa=6
+                        elif self.nuevo_combo_box.get()=="2":
+                            if len(ingredientes)<2:
+                                self.label_petición.config(text="Se necesitan al menos 2 ingredientes para crear un producto, por favor derle click en enviar para confirmar")
+                                self.nuevo_combo_box.state(["disabled"])
+                                etapa=6
+                            elif len(ingredientes)>=2:
+                                self.label_petición.config(text="Seleccione el tipo de producto que desea crear:")
+                                self.nuevo_combo_box.config(values=["1","2","3","4"])
+                                label_informacion.config(text="1. Torta\n2. Dona\n3. Pastel frito\n4. Galleta",borderwidth=2,relief="solid")
+                                etapa+=1
+                    elif etapa==10:
+                        tipo_de_producto=self.nuevo_combo_box.get()
+                        if tipo_de_producto=="1":
+                            nuevo_producto=Tortas("torta",5 ,ingredientes_y_cantidad,0,"abc123",3,6,"chocolate")
+                            self.label_petición.config(text=f"Producto exitosamente creado: {nuevo_producto.nombre}, por favor derle click en enviar para confirmar")
+                            self.nuevo_combo_box.state(["disabled"])
+                            temp1 = administrador.bodega.productos[:]
+                            temp1.append(nuevo_producto)
+                            bodegatemporal1 = administrador.bodega
+                            bodegatemporal1.productos = temp1
+                            administrador.bodega = bodegatemporal1
+                            etapa+=1
+                        elif tipo_de_producto=="2":
+                            nuevo_producto=Donas("dona", 5, ingredientes_y_cantidad, 20, "dfg123", 3, False, "arquipe")
+                            self.label_petición.config(text=f"Producto exitosamente creado: {nuevo_producto.nombre}, por favor derle click en enviar para confirmar")
+                            self.nuevo_combo_box.state(["disabled"])
+                            temp1 = administrador.bodega.productos[:]
+                            temp1.append(nuevo_producto)
+                            bodegatemporal1 = administrador.bodega
+                            bodegatemporal1.productos = temp1
+                            administrador.bodega = bodegatemporal1
+                            etapa+=1
+                        elif tipo_de_producto=="3":
+                            nuevo_producto=PastelesFritos("pastelFrito", 5, ingredientes_y_cantidad, 20, "dfg123", 3, False, "tomate")
+                            self.label_petición.config(text=f"Producto exitosamente creado: {nuevo_producto.nombre}, por favor derle click en enviar para confirmar")
+                            temp1 = administrador.bodega.productos[:]
+                            temp1.append(nuevo_producto)
+                            bodegatemporal1 = administrador.bodega
+                            bodegatemporal1.productos = temp1
+                            administrador.bodega = bodegatemporal1
+                            self.nuevo_combo_box.state(["disabled"])
+                            etapa+=1
+                        elif tipo_de_producto=="4":
+                            nuevo_producto=Galleta("galleta", 5, ingredientes_y_cantidad, 20, "dfg123", 3, False, "vainilla")
+                            self.label_petición.config(text=f"Producto exitosamente creado: {nuevo_producto.nombre}, por favor derle click en enviar para confirmar")
+                            self.nuevo_combo_box.state(["disabled"])
+                            temp1.append(nuevo_producto)
+                            bodegatemporal1 = administrador.bodega
+                            bodegatemporal1.productos = temp1
+                            administrador.bodega = bodegatemporal1
+                            self.nuevo_combo_box.state(["disabled"])
+                            etapa+=1
+                    elif etapa==11:
+                        self.label_petición.destroy()
+                        self.combo_box.destroy()
+                        boton_confirmación.destroy()
+                        self.nuevo_combo_box.destroy()
+                        label_informacion.config(text="Esperamos vuelvas pronto",borderwidth=2,relief="solid")
+                        etapa+=1
+                        
+                    elif etapa==12:
+                        pass
+                            
+                            
+                            
+                        
+                        
+                
+                
+                
                 boton_confirmación.config(command=enviar)
-                pass
+                
 
             elif funcionalidad=="funcionalidad5":
                 boton_confirmación.config(command=enviar)
@@ -233,7 +414,6 @@ def ingresar():
                     elif etapa==2:
                         if self.combo_box.get()=="1":
                             camion_seleccionado.disponibilidad=False
-                            Camion.camiones.remove(camion_seleccionado)
                             label_informacion.config(text=f"Se ha enviado el camión {camion_seleccionado.marca} {camion_seleccionado.modelo} {camion_seleccionado.placa}",borderwidth=2,relief="solid")
                             self.label_petición.config(text="Hasta luego, seleccione otra funcionalidad si así lo desea")
                             self.combo_box.state(["disabled"])
@@ -253,7 +433,67 @@ def ingresar():
                             self.label_petición.config(text="Hasta luego, seleccione otra funcionalidad si así lo desea")
                             self.combo_box.state(["disabled"])
                             label_informacion.config(text="Esperamos vuelvas pronto",borderwidth=2,relief="solid")
-                            pass
+                            etapa+=1
+                            
+                    elif etapa==4:
+                        self.label_petición.destroy()
+                        self.combo_box.destroy()
+                        boton_confirmación.destroy()    
+                boton_confirmación.config(command=enviar)
+                        
+            elif funcionalidad=="funcionalidad7":
+                etapa=0
+                respuesta1=None
+                respuesta2=None
+                def enviar():
+                    nonlocal etapa, respuesta1, respuesta2
+                    if etapa==0:
+                        if self.combo_box.get()=="1":
+                            self.label_petición.config(text="Desea cambiar la produccion de los productos?:")
+                            self.combo_box.config(values=["sí","no"])
+                            etapa+=1
+                        elif self.combo_box.get()=="2":
+                            self.label_petición.config(text="Hasta luego, seleccione otra funcionalidad si así lo desea")
+                            self.combo_box.state(["disabled"])
+                            label_informacion.config(text="Esperamos vuelvas pronto",borderwidth=2,relief="solid")
+                    elif etapa==1:
+                        respuesta1=self.combo_box.get()
+                        if self.combo_box.get()=="sí":
+                            label_informacion.config(text="Se ha cambiado la produccion de los productos")
+                            self.label_petición.config(text="Desea cambiar el precio de los productos?:")
+                            self.combo_box.config(values=["sí","no"])
+                            etapa+=1
+                        elif self.combo_box.get()=="no":
+                            self.label_petición.config(text="Desea cambiar el precio de los productos?:")
+                            label_informacion.config(text="No se ha cambiado la produccion de los productos")
+                            self.combo_box.config(values=["sí","no"])
+                            etapa+=2
+                    elif etapa==2:
+                        respuesta2=self.combo_box.get()
+                        if self.combo_box.get()=="sí":
+                            label_informacion.config(text="Se ha cambiado el precio de los productos")
+                            self.label_petición.config(text="Hasta luego, seleccione otra funcionalidad si así lo desea")
+                            self.combo_box.state(["disabled"])
+                            etapa+=1
+                        elif self.combo_box.get()=="no":
+                            self.label_petición.config(text="Hasta luego, seleccione otra funcionalidad si así lo desea")
+                            self.combo_box.state(["disabled"])
+                            label_informacion.config(text=administrador.bodega.actualizar_produccion_precio(respuesta1,respuesta2,administrador.fabrica),borderwidth=2,relief="solid")
+                            etapa+=1
+                    elif etapa==3:
+                        if self.combo_box.get()=="sí":
+                            label_informacion.config(text=administrador.bodega.actualizar_produccion_precio(respuesta1,respuesta2,administrador.fabrica),borderwidth=2,relief="solid")
+                            self.label_petición.config(text="Hasta luego, seleccione otra funcionalidad si así lo desea")
+                            self.combo_box.state(["disabled"])
+                            etapa+=1
+                            
+                    elif etapa==4:
+                        self.label_petición.destroy()
+                        self.combo_box.destroy()
+                        boton_confirmación.destroy()
+                        label_informacion.config(text="Esperamos vuelvas pronto",borderwidth=2,relief="solid")
+                    
+                        
 
 
                             
@@ -292,42 +532,36 @@ def ingresar():
         ventana_inicio.deiconify()
 
 
+    # Ajustamos la grilla de la ventana principal
+    ventana_principal.grid_rowconfigure(0, weight=1)
+    ventana_principal.grid_columnconfigure(0, weight=1)
+
     #Frame del nombre
     frame_nombre = Frame(ventana_principal) 
-    frame_nombre.grid(row=0,column=0,pady=50,padx=50)
-    
+    frame_nombre.grid(row=0,column=0,pady=5,padx=5)
 
     # Creamos el label y lo centramos en el frame_nombre
-    label_nombre = Label(frame_nombre, text="",font=("Arial",25,"bold"))
-    label_nombre.grid(row=0, column=0, sticky="n")  # Sticky north (arriba)
-
-    
+    label_nombre = Label(frame_nombre, text="",font=("Arial",15,"bold"))
+    label_nombre.grid(row=0, column=0)  # Centrado en el frame_nombre
 
     #Frame de descripción
     frame_descripción = Frame(ventana_principal) 
-    frame_descripción.grid(row=1,column=0,pady=50,padx=50)
-    
+    frame_descripción.grid(row=1,column=0,pady=100,padx=5)
 
     # Creamos el label y lo centramos en el frame_nombre
-    label_descripción = Label(frame_nombre, text="",font=("Arial",12,"bold"))
-    label_descripción.grid(row=1, column=0, sticky="n",pady=50)  # Sticky north (arriba) 
-
+    label_descripción = Label(frame_descripción, text="",font=("Arial",12,"bold"))
+    label_descripción.grid(row=0, column=0)  # Centrado en el frame_descripción
 
     #Frame de dialogo
     frame_dialogo = Frame(ventana_principal,relief="solid",borderwidth=2) 
-    frame_dialogo.grid(row=1,column=0,pady=0,padx=0)
-    
-    
+    frame_dialogo.grid(row=2,column=0,pady=0,padx=0)
 
     #Frame_informacion estará a la derecha de frame_dialogo
-    
     frame_inofrmacion=Frame(frame_dialogo)
-    frame_inofrmacion.grid(row=0,column=3,pady=50,padx=0)
-    # Ajustamos la grilla del frame_nombre
-    frame_inofrmacion.grid_rowconfigure(0, weight=1)
-    frame_inofrmacion.grid_columnconfigure(0, weight=1)
-    
-    label_informacion=Label(frame_inofrmacion,text="",font=("Arial",12,"bold"))
+    frame_inofrmacion.grid(row=0,column=1,pady=200,padx=0)
+
+    label_informacion=Label(frame_dialogo,text="",font=("Arial",12,"bold"))
+    label_informacion.grid(row=0,column=0)  # Centrado en el frame_informacion12,"bold"))
     label_informacion.grid(row=0,column=3,pady=50,padx=0)
     
    
@@ -338,6 +572,7 @@ def ingresar():
     
 
     def funcionalidad1():
+        
         label_nombre.config(text="Compra de materia prima",borderwidth=2,relief="solid")
         label_descripción.config(text=(
             "La materia prima es escencial para la producción díaria y el funcionamiento de la empresa, para esto se verificará la disponibilidad en la bodega" 
@@ -364,15 +599,15 @@ def ingresar():
                                        "\n luego se inicia una tanda de producción identificada por un código. Si hay espacio, se añaden los productos."+
                                        "\n Si la bodega está llena, se detiene la producción y se sugiere enviarlos a otra bodega con capacidad."+
                                        "\n Esto asegura que la producción se ajuste al espacio disponible y evita interrupciones."),borderwidth=2,relief="solid")
-        
+        label_informacion.config(text="La encargada de esta funcionalidad tuvo problemas familiares, por favor tener consideración",borderwidth=2,relief="solid")
     
     def funcionalidad4():
         label_nombre.config(text="Agregar producto",borderwidth=2,relief="solid")
         label_descripción.config(text=( "La opción permite agregar ingredientes, elegir ingredientes existentes, y crear un nuevo producto con ellos."+
                                        "\n Si se agregan ingredientes nuevos, se detalla su información; luego se eligen y cuantifican al menos 2 ingredientes existentes."+
                                        "\n Tras esta selección, se define el nuevo producto con su información detallada."),borderwidth=2,relief="solid")
-        
-        
+        label_informacion.config(text="Estos son los ingredientes disponibles:\n"+Ingrediente.obtener_lista_ingredientes(),borderwidth=2,relief="solid")
+        FieldFrame("Tu producto va a necesitar un ingrediente que no esté en la lista? (1.Si / 2.No):",[1,2],"valor predeterminado",True,"funcionalidad4")
         
     def funcionalidad5():
         label_nombre.config(text="Eliminar producto",borderwidth=2,relief="solid")
@@ -388,16 +623,17 @@ def ingresar():
                                        "\n Se muestran envíos pendientes y camiones con espacio suficiente."+
                                        "\n Tras elegir un camión, se reduce su capacidad según el envío asignado, dejando espacio"+
                                        "\n adicional si se decide no ocupar todo. El camión se despacha y el envío se elimina de la lista."),borderwidth=2,relief="solid")
-        label_informacion.config(text="Estos son los envios pendientes por asignación:\n"+Envio.envios_por_asignar(),borderwidth=2,relief="solid")
-        
-                                       
+        label_informacion.config(text="Estos son los envios pendientes por asignación:\n"+Envio.envios_por_asignar(),borderwidth=2,relief="solid")                   
         FieldFrame("Seleccione el número del envío que desea asignar a un camión:",list(range(1, len(Envio.lista_envios_no_asignados) + 1)),"valor predeterminado",True,"funcionalidad6")
+        
     def funcionalidad7():
         label_nombre.config(text="Cambiar la producción y/o ventas",borderwidth=2,relief="solid")
         label_descripción.config(text=( "El administrador visualiza la producción y puede ajustar precios y producción de productos."+
                                        "\n Puede reducir un 50% el precio de un artículo menos vendido y modificar la producción en un 15% menos si tiene baja venta o un 30% menos si tiene alta venta,"+
                                        "\n basado en su historial. Estos cambios se reflejan en la base de datos al confirmar la modificación."),borderwidth=2,relief="solid")
-
+        label_informacion.config(text="Cambia automaticamente el nivel de produccion en base a las ventas de un producto\n y/o el precio de un producto en base a los dias que lleva en bodega",
+                                 borderwidth=2,relief="solid")
+        FieldFrame("¿Esta de acuerdo? 1. Si / 2. No",["1","2"],"valor predeterminado",True,"funcionalidad7")
         
     def aplicacion():
         mensaje = ("¡Bienvenido a Deli Horno!\n\n"
