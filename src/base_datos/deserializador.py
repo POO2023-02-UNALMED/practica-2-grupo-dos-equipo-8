@@ -13,4 +13,7 @@ def deserializar(nombre_objeto):
         objeto = pickle.load(file)
         return objeto
     except Exception:
-        return []
+        if(nombre_objeto != "administrador"):
+            return []
+        else:
+            return None

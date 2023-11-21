@@ -3,8 +3,13 @@ from tkinter import messagebox
 from PIL import Image, ImageTk
 from tkinter import ttk
 import sys
+
 # Agregar la ruta del directorio 'src' al principio de sys.path
 sys.path.insert(0, './src')
+
+from errores.error_critico import ErrorCritico
+from errores.error_advertencia import ErrorAdvertencia
+from errores.error_valor_no_permitido import ErrorValorNoPermitido
 
 from gestor_aplicacion.empresa.envio import Envio
 from gestor_aplicacion.empresa.ingrediente import Ingrediente
@@ -21,9 +26,6 @@ from gestor_aplicacion.producto.torta import Tortas
 from gestor_aplicacion.producto.dona import Donas
 from gestor_aplicacion.producto.pastel_frito import PastelesFritos
 from gestor_aplicacion.producto.galleta import Galleta
-
-administrador = Administrador.crear_todo()
-
 
 ventana_inicio = Tk()
 ventana_inicio.geometry("1500x1000")
@@ -53,7 +55,13 @@ def ingresar():
     ventana_principal=Tk()
     ventana_principal.title("DelHorno Administrator")
     ventana_principal.geometry("1500x1000")
-
+    try:
+        administrador = Administrador.inicializar()
+    except ErrorCritico as e:
+        e.display()
+        ventana_principal.destroy()
+        ventana_inicio.deiconify()
+        
     #Clase FieldFrame   
     class FieldFrame(Frame):
         field_frame_activo=None
@@ -540,38 +548,53 @@ def ingresar():
                 def enviar():
                     nonlocal etapa, respuesta1, respuesta2
                     if etapa==0:
-                        if self.combo_box.get()=="1":
-                            self.label_petición.config(text="Desea cambiar la produccion de los productos?:")
-                            self.combo_box.config(values=["sí","no"])
-                            etapa+=1
-                        elif self.combo_box.get()=="2":
-                            self.label_petición.config(text="Hasta luego, seleccione otra funcionalidad si así lo desea")
-                            self.combo_box.state(["disabled"])
-                            label_informacion.config(text="Esperamos vuelvas pronto",borderwidth=2,relief="solid")
+                        try:
+                            if self.combo_box.get()=="1":
+                                self.label_petición.config(text="Desea cambiar la produccion de los productos?:")
+                                self.combo_box.config(values=["sí","no"])
+                                etapa+=1
+                            elif self.combo_box.get()=="2":
+                                self.label_petición.config(text="Hasta luego, seleccione otra funcionalidad si así lo desea")
+                                self.combo_box.state(["disabled"])
+                                label_informacion.config(text="Esperamos vuelvas pronto",borderwidth=2,relief="solid")
+                            else:
+                                raise ErrorValorNoPermitido()
+                        except ErrorAdvertencia as e:
+                            e.display()
                     elif etapa==1:
-                        respuesta1=self.combo_box.get()
-                        if self.combo_box.get()=="sí":
-                            label_informacion.config(text="Se ha cambiado la produccion de los productos")
-                            self.label_petición.config(text="Desea cambiar el precio de los productos?:")
-                            self.combo_box.config(values=["sí","no"])
-                            etapa+=1
-                        elif self.combo_box.get()=="no":
-                            self.label_petición.config(text="Desea cambiar el precio de los productos?:")
-                            label_informacion.config(text="No se ha cambiado la produccion de los productos")
-                            self.combo_box.config(values=["sí","no"])
-                            etapa+=2
+                        try:
+                            respuesta1=self.combo_box.get()
+                            if self.combo_box.get()=="sí":
+                                label_informacion.config(text="Se ha cambiado la produccion de los productos")
+                                self.label_petición.config(text="Desea cambiar el precio de los productos?:")
+                                self.combo_box.config(values=["sí","no"])
+                                etapa+=1
+                            elif self.combo_box.get()=="no":
+                                self.label_petición.config(text="Desea cambiar el precio de los productos?:")
+                                label_informacion.config(text="No se ha cambiado la produccion de los productos")
+                                self.combo_box.config(values=["sí","no"])
+                                etapa+=2
+                            else:
+                                raise ErrorValorNoPermitido()
+                        except ErrorAdvertencia as e:
+                            e.display()
                     elif etapa==2:
-                        respuesta2=self.combo_box.get()
-                        if self.combo_box.get()=="sí":
-                            label_informacion.config(text="Se ha cambiado el precio de los productos")
-                            self.label_petición.config(text="Hasta luego, seleccione otra funcionalidad si así lo desea")
-                            self.combo_box.state(["disabled"])
-                            etapa+=1
-                        elif self.combo_box.get()=="no":
-                            self.label_petición.config(text="Hasta luego, seleccione otra funcionalidad si así lo desea")
-                            self.combo_box.state(["disabled"])
-                            label_informacion.config(text=administrador.bodega.actualizar_produccion_precio(respuesta1,respuesta2,administrador.fabrica),borderwidth=2,relief="solid")
-                            etapa+=1
+                        try:
+                            respuesta2=self.combo_box.get()
+                            if self.combo_box.get()=="sí":
+                                label_informacion.config(text="Se ha cambiado el precio de los productos")
+                                self.label_petición.config(text="Hasta luego, seleccione otra funcionalidad si así lo desea")
+                                self.combo_box.state(["disabled"])
+                                etapa+=1
+                            elif self.combo_box.get()=="no":
+                                self.label_petición.config(text="Hasta luego, seleccione otra funcionalidad si así lo desea")
+                                self.combo_box.state(["disabled"])
+                                label_informacion.config(text=administrador.bodega.actualizar_produccion_precio(respuesta1,respuesta2,administrador.fabrica),borderwidth=2,relief="solid")
+                                etapa+=1
+                            else:
+                                raise ErrorValorNoPermitido()
+                        except ErrorAdvertencia as e:
+                            e.display()
                     elif etapa==3:
                         if self.combo_box.get()=="sí":
                             label_informacion.config(text=administrador.bodega.actualizar_produccion_precio(respuesta1,respuesta2,administrador.fabrica),borderwidth=2,relief="solid")
@@ -584,34 +607,10 @@ def ingresar():
                         self.combo_box.destroy()
                         boton_confirmación.destroy()
                         label_informacion.config(text="Esperamos vuelvas pronto",borderwidth=2,relief="solid")
-                    
                         
-
-
-                            
-                            
-                            
-
-
-                    
-                        
-                    
-
-
-
-
-
-
-
-
-
                 boton_confirmación.config(command=enviar)
-
-            
-
-            
     
-    #Funcioon para error al ejecutar varias veces
+    #Funcion para error al ejecutar varias veces
     def cerrarVentana():
         ventana_inicio.destroy()
         ventana_principal.destroy()
@@ -620,6 +619,10 @@ def ingresar():
 
     #Funciones
     def salir_principal():
+        try:
+            Administrador.finalizarSesion(administrador)
+        except ErrorCritico as e:
+            e.display()
         ventana_principal.destroy()
         ventana_inicio.deiconify()
 
@@ -655,13 +658,6 @@ def ingresar():
     label_informacion=Label(frame_dialogo,text="",font=("Arial",12,"bold"))
     label_informacion.grid(row=0,column=0)  # Centrado en el frame_informacion12,"bold"))
     label_informacion.grid(row=0,column=3,pady=50,padx=0)
-    
-   
-    
-    
-    
-    
-    
 
     def funcionalidad1():
         frame_dialogo.config(relief="solid",borderwidth=2)
@@ -884,6 +880,8 @@ biografias = [
     {"nombre": "Maria Isabel Quiroz", "correo": "mquirozr@unal.edu.co", "cedula": "1010028863",
     "carrera": "Ciencias de la computación", "edad": 22, "semestre": 5}
 ]
+
+
 
 # Variable para rastrear la biografía actual
 biografia_actual = 0

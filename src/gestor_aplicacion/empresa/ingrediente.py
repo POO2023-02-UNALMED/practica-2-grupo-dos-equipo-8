@@ -75,6 +75,11 @@ class Ingrediente(IProductoIngrediente):
     
     def set_espacio_almacenamiento(self, espacio_almacenamiento):
         self.espacio_almacenamiento = espacio_almacenamiento
-        
-    def get_ingredientes_disponibles():
-        return Ingrediente.ingredientes_disponibles
+    
+    @classmethod
+    def get_ingredientes_disponibles(cls):
+        return cls.ingredientes_disponibles
+    
+    @classmethod
+    def set_ingredientes_disponibles(cls, lista_ingredientes):
+        cls.ingredientes_disponibles = lista_ingredientes

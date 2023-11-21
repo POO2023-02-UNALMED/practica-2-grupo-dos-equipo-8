@@ -1,4 +1,4 @@
-from error_advertencia import ErrorAdvertencia
+from errores.error_advertencia import ErrorAdvertencia
 
 class ErrorLongitud(ErrorAdvertencia):
     def __init__(self):
