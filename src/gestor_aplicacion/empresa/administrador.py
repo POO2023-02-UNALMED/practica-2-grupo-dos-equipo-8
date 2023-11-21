@@ -47,7 +47,6 @@ class Administrador:
             administrador = Administrador.crear_todo()
             return administrador
         except Exception as e:
-            print(e)
             raise ErrorSerializacion()
 
     @staticmethod
