@@ -6,7 +6,10 @@ import sys
 
 # Agregar la ruta del directorio 'src' al principio de sys.path
 sys.path.insert(0, './src')
+
 from errores.error_critico import ErrorCritico
+from errores.error_advertencia import ErrorAdvertencia
+from errores.error_valor_no_permitido import ErrorValorNoPermitido
 
 from gestor_aplicacion.empresa.envio import Envio
 from gestor_aplicacion.empresa.ingrediente import Ingrediente
@@ -544,38 +547,53 @@ def ingresar():
                 def enviar():
                     nonlocal etapa, respuesta1, respuesta2
                     if etapa==0:
-                        if self.combo_box.get()=="1":
-                            self.label_petición.config(text="Desea cambiar la produccion de los productos?:")
-                            self.combo_box.config(values=["sí","no"])
-                            etapa+=1
-                        elif self.combo_box.get()=="2":
-                            self.label_petición.config(text="Hasta luego, seleccione otra funcionalidad si así lo desea")
-                            self.combo_box.state(["disabled"])
-                            label_informacion.config(text="Esperamos vuelvas pronto",borderwidth=2,relief="solid")
+                        try:
+                            if self.combo_box.get()=="1":
+                                self.label_petición.config(text="Desea cambiar la produccion de los productos?:")
+                                self.combo_box.config(values=["sí","no"])
+                                etapa+=1
+                            elif self.combo_box.get()=="2":
+                                self.label_petición.config(text="Hasta luego, seleccione otra funcionalidad si así lo desea")
+                                self.combo_box.state(["disabled"])
+                                label_informacion.config(text="Esperamos vuelvas pronto",borderwidth=2,relief="solid")
+                            else:
+                                raise ErrorValorNoPermitido()
+                        except ErrorAdvertencia as e:
+                            e.display()
                     elif etapa==1:
-                        respuesta1=self.combo_box.get()
-                        if self.combo_box.get()=="sí":
-                            label_informacion.config(text="Se ha cambiado la produccion de los productos")
-                            self.label_petición.config(text="Desea cambiar el precio de los productos?:")
-                            self.combo_box.config(values=["sí","no"])
-                            etapa+=1
-                        elif self.combo_box.get()=="no":
-                            self.label_petición.config(text="Desea cambiar el precio de los productos?:")
-                            label_informacion.config(text="No se ha cambiado la produccion de los productos")
-                            self.combo_box.config(values=["sí","no"])
-                            etapa+=2
+                        try:
+                            respuesta1=self.combo_box.get()
+                            if self.combo_box.get()=="sí":
+                                label_informacion.config(text="Se ha cambiado la produccion de los productos")
+                                self.label_petición.config(text="Desea cambiar el precio de los productos?:")
+                                self.combo_box.config(values=["sí","no"])
+                                etapa+=1
+                            elif self.combo_box.get()=="no":
+                                self.label_petición.config(text="Desea cambiar el precio de los productos?:")
+                                label_informacion.config(text="No se ha cambiado la produccion de los productos")
+                                self.combo_box.config(values=["sí","no"])
+                                etapa+=2
+                            else:
+                                raise ErrorValorNoPermitido()
+                        except ErrorAdvertencia as e:
+                            e.display()
                     elif etapa==2:
-                        respuesta2=self.combo_box.get()
-                        if self.combo_box.get()=="sí":
-                            label_informacion.config(text="Se ha cambiado el precio de los productos")
-                            self.label_petición.config(text="Hasta luego, seleccione otra funcionalidad si así lo desea")
-                            self.combo_box.state(["disabled"])
-                            etapa+=1
-                        elif self.combo_box.get()=="no":
-                            self.label_petición.config(text="Hasta luego, seleccione otra funcionalidad si así lo desea")
-                            self.combo_box.state(["disabled"])
-                            label_informacion.config(text=administrador.bodega.actualizar_produccion_precio(respuesta1,respuesta2,administrador.fabrica),borderwidth=2,relief="solid")
-                            etapa+=1
+                        try:
+                            respuesta2=self.combo_box.get()
+                            if self.combo_box.get()=="sí":
+                                label_informacion.config(text="Se ha cambiado el precio de los productos")
+                                self.label_petición.config(text="Hasta luego, seleccione otra funcionalidad si así lo desea")
+                                self.combo_box.state(["disabled"])
+                                etapa+=1
+                            elif self.combo_box.get()=="no":
+                                self.label_petición.config(text="Hasta luego, seleccione otra funcionalidad si así lo desea")
+                                self.combo_box.state(["disabled"])
+                                label_informacion.config(text=administrador.bodega.actualizar_produccion_precio(respuesta1,respuesta2,administrador.fabrica),borderwidth=2,relief="solid")
+                                etapa+=1
+                            else:
+                                raise ErrorValorNoPermitido()
+                        except ErrorAdvertencia as e:
+                            e.display()
                     elif etapa==3:
                         if self.combo_box.get()=="sí":
                             label_informacion.config(text=administrador.bodega.actualizar_produccion_precio(respuesta1,respuesta2,administrador.fabrica),borderwidth=2,relief="solid")
