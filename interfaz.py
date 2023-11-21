@@ -56,6 +56,7 @@ def ingresar():
 
     #Clase FieldFrame   
     class FieldFrame(Frame):
+        field_frame_activo=None
         def __init__(self,criterio,criterios,valor_inicial,permitir_cambios,funcionalidad):
             
             #Permite que se hagan cambios en el combo box
@@ -68,7 +69,7 @@ def ingresar():
             self.combo_box=ttk.Combobox(frame_dialogo,values=criterios)
             #valor inicial del combo box
             self.combo_box.set(valor_inicial)
-            
+            FieldFrame.field_frame_activo=self
             
             #Posición de los elementos
             self.label_petición.grid(row=0,column=0,padx=10,pady=50)
@@ -86,12 +87,12 @@ def ingresar():
                     nonlocal etapa, seleccion, cantidad,nombre_seleccionado
                     if etapa==0:
                         if self.combo_box.get()=="1":
-                            self.label_petición.config(text="""Aquí puede ver los ingredientes escasos,
-                                                    ¿Está seguro de que necesita comprar ingredientes? (1.Si / 2.No): """)
+                            self.label_petición.config(text="Aquí puede ver los ingredientes escasos,"
+                                                            "\n¿Está seguro de que necesita comprar ingredientes? (1.Si / 2.No): ")
                             label_informacion.config(text=administrador.bodega.mostrar_ingredientes_escasos(),borderwidth=2,relief="solid")
                             etapa+=1
                         if self.combo_box.get()=="2":
-                            self.label_petición.config(text="Hasta luego, seleccione otra funcionalidad si así lo desea")
+                            self.label_petición.config(text="")
                             self.combo_box.state(["disabled"])
                             label_informacion.config(text="Esperamos vuelvas pronto",borderwidth=2,relief="solid")
                     
@@ -644,7 +645,7 @@ def ingresar():
     label_descripción.grid(row=0, column=0)  # Centrado en el frame_descripción
 
     #Frame de dialogo
-    frame_dialogo = Frame(ventana_principal,relief="solid",borderwidth=2) 
+    frame_dialogo = Frame(ventana_principal) 
     frame_dialogo.grid(row=2,column=0,pady=0,padx=0)
 
     #Frame_informacion estará a la derecha de frame_dialogo
@@ -663,7 +664,7 @@ def ingresar():
     
 
     def funcionalidad1():
-        
+        frame_dialogo.config(relief="solid",borderwidth=2)
         label_nombre.config(text="Compra de materia prima",borderwidth=2,relief="solid")
         label_descripción.config(text=(
             "La materia prima es escencial para la producción díaria y el funcionamiento de la empresa, para esto se verificará la disponibilidad en la bodega" 
@@ -676,6 +677,7 @@ def ingresar():
 
     
     def funcionalidad2():
+        frame_dialogo.config(relief="solid",borderwidth=2)
         label_nombre.config(text="Venta por encargo",borderwidth=2,relief="solid")
         label_descripción.config(text=("Para definir ventas por encargo, se debe tener en cuenta que una venta por encargo es creada por el administrado"
                                  +"\n segun una peticion previa del cliente , los productos serán encargados a bodega y los asignará a un envio especifico"),borderwidth=2,relief="solid")
@@ -684,6 +686,7 @@ def ingresar():
         
     
     def funcionalidad3():
+        frame_dialogo.config(relief="solid",borderwidth=2)
         label_nombre.config(text="Cambiar lista de producción diaría",borderwidth=2,relief="solid")
         label_descripción.config(text=( "permite al administrador actualizar la producción diaria de productos. Tras ingresar la cantidad deseada,"+
                                        "\n se verifica si la bodega tiene espacio suficiente. Se ajustan los requerimientos de producción y precios,"+
@@ -695,6 +698,7 @@ def ingresar():
         
                    
     def funcionalidad4():
+        frame_dialogo.config(relief="solid",borderwidth=2)
         label_nombre.config(text="Agregar producto",borderwidth=2,relief="solid")
         label_descripción.config(text=( "La opción permite agregar ingredientes, elegir ingredientes existentes, y crear un nuevo producto con ellos."+
                                        "\n Si se agregan ingredientes nuevos, se detalla su información; luego se eligen y cuantifican al menos 2 ingredientes existentes."+
@@ -703,6 +707,7 @@ def ingresar():
         FieldFrame("Tu producto va a necesitar un ingrediente que no esté en la lista? (1.Si / 2.No):",[1,2],"valor predeterminado",True,"funcionalidad4")
         
     def funcionalidad5():
+        frame_dialogo.config(relief="solid",borderwidth=2)
         label_nombre.config(text="Eliminar producto",borderwidth=2,relief="solid")
         label_descripción.config(text=( "La máquina muestra los productos disponibles con sus detalles. El cliente escribe el nombre del producto a eliminar y confirma la acción."+
                                        "\n ¨¨No¨¨ cancela la solicitud, mientras que ¨¨Sí¨¨ elimina el producto."+
@@ -711,6 +716,7 @@ def ingresar():
         label_informacion.config(text="Estos son los productos disponibles:\n"+administrador.bodega.mostrar_productos(),borderwidth=2,relief="solid")
         FieldFrame("Por favor, escriba el numero del producto que desea eliminar: ",list(range(1, len(administrador.bodega.productos) + 1)),"valor predeterminado",True,"funcionalidad5")
     def funcionalidad6():
+        frame_dialogo.config(relief="solid",borderwidth=2)
         label_nombre.config(text="Asignar envio y/o camion",borderwidth=2,relief="solid")
         label_descripción.config(text=( "El administrador asigna un envío a un camión disponible verificando su capacidad."+
                                        "\n Se muestran envíos pendientes y camiones con espacio suficiente."+
@@ -987,7 +993,21 @@ def mostrar_descripcion():
     descripcion = Label(frame_descripcion, text="", font=("Arial", 12), bg="white")
     descripcion.grid(row=0,column=0)
     
-    descripcion.config(text="Esta es la mejor app para administración pastelera de Colombia")
+    descripcion.config(text="¡Claro! Imagina una aplicación, DeliHorno,"
+                            "\nque es como tener un chef experto, "
+                           "\nun gerente organizado y un asistente confiable todo "
+                            "\nen uno para tu pastelería. "
+                           "\nDesde la gestión de inventario hasta la creación de recetas y"
+                           "\n la optimización de pedidos, "
+                           "\nDeliHorno es tu boleto de oro al mundo delicioso "
+                           "\ny bien administrado de las pastelerías. "
+                           "\nCon funciones intuitivas que hacen que la gestión "
+                           "\nsea un pedazo de pastel y herramientas "
+                           "\npara crear y compartir recetas de ensueño, esta app "
+                           "\nestá diseñada para llevar tus habilidades "
+                           "\nde pastelería a nuevos horizontes mientras mantienes"
+                           "\n tu negocio funcionando sin problemas. "
+                           "\n¡Prepárate para hornear el éxito con DeliHorno!")
 
 def salir():
     ventana_inicio.destroy()
