@@ -1,4 +1,4 @@
-from error_critico import ErrorCritico
+from errores.error_critico import ErrorCritico
 
 class ErrorEjecucion(ErrorCritico):
     def __init__(self, err = "Ha ocurrido un error en la ejecucion"):
