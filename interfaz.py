@@ -3,8 +3,10 @@ from tkinter import messagebox
 from PIL import Image, ImageTk
 from tkinter import ttk
 import sys
+
 # Agregar la ruta del directorio 'src' al principio de sys.path
 sys.path.insert(0, './src')
+from errores.error_critico import ErrorCritico
 
 from gestor_aplicacion.empresa.envio import Envio
 from gestor_aplicacion.empresa.ingrediente import Ingrediente
@@ -21,9 +23,6 @@ from gestor_aplicacion.producto.torta import Tortas
 from gestor_aplicacion.producto.dona import Donas
 from gestor_aplicacion.producto.pastel_frito import PastelesFritos
 from gestor_aplicacion.producto.galleta import Galleta
-
-administrador = Administrador.crear_todo()
-
 
 ventana_inicio = Tk()
 ventana_inicio.geometry("1500x1000")
@@ -53,7 +52,13 @@ def ingresar():
     ventana_principal=Tk()
     ventana_principal.title("DelHorno Administrator")
     ventana_principal.geometry("1500x1000")
-
+    try:
+        administrador = Administrador.inicializar()
+    except ErrorCritico as e:
+        e.display()
+        ventana_principal.destroy()
+        ventana_inicio.deiconify()
+        
     #Clase FieldFrame   
     class FieldFrame(Frame):
         def __init__(self,criterio,criterios,valor_inicial,permitir_cambios,funcionalidad):
@@ -583,34 +588,10 @@ def ingresar():
                         self.combo_box.destroy()
                         boton_confirmación.destroy()
                         label_informacion.config(text="Esperamos vuelvas pronto",borderwidth=2,relief="solid")
-                    
                         
-
-
-                            
-                            
-                            
-
-
-                    
-                        
-                    
-
-
-
-
-
-
-
-
-
                 boton_confirmación.config(command=enviar)
-
-            
-
-            
     
-    #Funcioon para error al ejecutar varias veces
+    #Funcion para error al ejecutar varias veces
     def cerrarVentana():
         ventana_inicio.destroy()
         ventana_principal.destroy()
@@ -619,6 +600,10 @@ def ingresar():
 
     #Funciones
     def salir_principal():
+        try:
+            Administrador.finalizarSesion(administrador)
+        except ErrorCritico as e:
+            e.display()
         ventana_principal.destroy()
         ventana_inicio.deiconify()
 
@@ -654,13 +639,6 @@ def ingresar():
     label_informacion=Label(frame_dialogo,text="",font=("Arial",12,"bold"))
     label_informacion.grid(row=0,column=0)  # Centrado en el frame_informacion12,"bold"))
     label_informacion.grid(row=0,column=3,pady=50,padx=0)
-    
-   
-    
-    
-    
-    
-    
 
     def funcionalidad1():
         
@@ -878,6 +856,8 @@ biografias = [
     {"nombre": "Maria Isabel Quiroz", "correo": "mquirozr@unal.edu.co", "cedula": "1010028863",
     "carrera": "Ciencias de la computación", "edad": 22, "semestre": 5}
 ]
+
+
 
 # Variable para rastrear la biografía actual
 biografia_actual = 0

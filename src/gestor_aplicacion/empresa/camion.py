@@ -61,3 +61,11 @@ class Camion:
 
     def set_disponibilidad(self, disponibilidad):
         self.disponibilidad = disponibilidad
+
+    @classmethod
+    def get_camiones(cls):
+        return cls.camiones
+    
+    @classmethod
+    def set_camiones(cls, lista_camiones):
+        cls.camiones = lista_camiones

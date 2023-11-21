@@ -1,4 +1,4 @@
-from error_critico import ErrorCritico
+from errores.error_critico import ErrorCritico
 
 class ErrorSerializacion(ErrorCritico):
     def __init__(self):

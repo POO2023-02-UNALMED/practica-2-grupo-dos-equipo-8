@@ -1,4 +1,6 @@
 import pickle
+from base_datos.deserializador import deserializar
+from base_datos.serializador import serializar
 from gestor_aplicacion.empresa.caja import Caja
 from gestor_aplicacion.empresa.camion import Camion
 from gestor_aplicacion.empresa.envio import Envio
@@ -9,6 +11,7 @@ from gestor_aplicacion.producto.torta import Tortas
 from gestor_aplicacion.producto.pastel_frito import PastelesFritos
 from gestor_aplicacion.producto.dona import Donas
 from gestor_aplicacion.producto.galleta import Galleta as Galletas
+from errores.error_serializacion import ErrorSerializacion
 
 class Administrador:
     def __init__(self, bodega, caja, camiones, fabrica):
@@ -19,33 +22,33 @@ class Administrador:
 
     @staticmethod
     def finalizarSesion(administrador):
-        # Serializar objetos y guardar en archivos
-        with open('administrador.pickle', 'wb') as file:
-            pickle.dump(administrador, file)
-        with open('bodega.pickle', 'wb') as file:
-            pickle.dump(administrador.bodega, file)
-        with open('envios.pickle', 'wb') as file:
-            pickle.dump(Envio.getListaEnvios(), file)
-        with open('ingredientes.pickle', 'wb') as file:
-            pickle.dump(Ingrediente.getIngredientesDisponibles(), file)
-        with open('camiones.pickle', 'wb') as file:
-            pickle.dump(Camion.getCamiones(), file)
+        try:
+            # Serializar objetos y guardar en archivos
+            serializar('administrador', administrador)
+            serializar('bodega', administrador.bodega)
+            serializar('envios', Envio.get_lista_envios())
+            serializar('ingredientes', Ingrediente.get_ingredientes_disponibles())
+            serializar('camiones', Camion.get_camiones())
+        except Exception as e:
+            print(e)
+            raise ErrorSerializacion()
 
     @staticmethod
     def inicializar():
         try:
-            with open('administrador.pickle', 'rb') as file:
-                administrador = pickle.load(file)
-            bodega = administrador.bodega
-           # Envio.setListaEnvios(Deserializador.deserializarEnvios())
-            Ingrediente.setIngredientesDisponibles(Deserializador.deserializarIngredientes())
-            #Camion.setCamiones(Deserializador.deserializarCamiones())
+            administrador = deserializar("administrador")
+            if administrador == None: 
+                raise FileNotFoundError()
+            Envio.set_lista_envios(deserializar("envios"))
+            Ingrediente.set_ingredientes_disponibles(deserializar("ingredientes"))
+            Camion.set_camiones(deserializar("camiones"))
             return administrador
         except FileNotFoundError:
-            administrador = Administrador.crearTodo()
+            administrador = Administrador.crear_todo()
             return administrador
         except Exception as e:
-            print(f"Error al inicializar: {e}")
+            print(e)
+            raise ErrorSerializacion()
 
     @staticmethod
     def crear_todo():

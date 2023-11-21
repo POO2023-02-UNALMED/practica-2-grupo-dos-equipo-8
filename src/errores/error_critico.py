@@ -7,7 +7,6 @@ class ErrorCritico(ErrorAplicacion):
         super().__init__("Detectado Error Critico: " + err)
     def display(self):
         messagebox.showerror("Error crítico", self.args[0])
-        print(self.args[0])
         
 try:        
     if(__name__ == "__main__"):

@@ -7,8 +7,7 @@ class ErrorAdvertencia(ErrorAplicacion):
         super().__init__("Nueva Advertencia: " + err)
     def display(self):
         messagebox.showwarning("Error de advertencia",self.args[0])
-        print(self.args[0])
-        
+
 try:        
     if(__name__ == "__main__"):
         raise ErrorAdvertencia("Lanzamiento")
