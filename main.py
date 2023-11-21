@@ -57,6 +57,7 @@ def compra_materia_prima_ui():
                 print("Seleccione el ingrediente que desea pedir:")
                 print(Ingrediente.obtener_lista_ingredientes())
                 opcion = int(scan())
+                print(len(Ingrediente.get_ingredientes_disponibles()))
                 if opcion < 1 or opcion > len(Ingrediente.get_ingredientes_disponibles()):
                     print("Opción no válida. Seleccione un número válido.")
                 nombre_ingrediente = Ingrediente.get_ingredientes_disponibles()[opcion - 1].nombre

@@ -21,10 +21,11 @@ class Ingrediente(IProductoIngrediente):
                 "harina": 2,
                 "huevos": 1,
                 "azucar": 3,
-                "leche": 4
+                "leche": 4,
+                "mantequila": 5
             }
             self.precio = self.calcular_precio(precios_base.get(nombre.lower(), 1))
-            self.identificador = [1, 2, 3, 4].index(precios_base.get(nombre.lower(), 5)) + 1
+            self.identificador = [1, 2, 3, 4,5].index(precios_base.get(nombre.lower(), 5)) + 1
             self.espacio_almacenamiento = [10, 5, 8, 7][self.identificador - 1]
 
             if not any(ingrediente.nombre == self.nombre for ingrediente in Ingrediente.ingredientes_disponibles):

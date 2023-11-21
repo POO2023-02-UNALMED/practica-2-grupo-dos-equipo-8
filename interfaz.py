@@ -80,8 +80,10 @@ def ingresar():
             if funcionalidad=="funcionalidad1":
                 etapa=0
                 seleccion=None
+                cantidad=None
+                nombre_seleccionado=None
                 def enviar():
-                    nonlocal etapa, seleccion
+                    nonlocal etapa, seleccion, cantidad,nombre_seleccionado
                     if etapa==0:
                         if self.combo_box.get()=="1":
                             self.label_petición.config(text="""Aquí puede ver los ingredientes escasos,
@@ -113,10 +115,14 @@ def ingresar():
                         etapa+=1
                     elif etapa==3:
                         cantidad=self.nuevo_valor.get()
+                        label_informacion.config(text=administrador.bodega.pedir_cantidad_ingrediente(int(seleccion), int(cantidad), administrador),borderwidth=2,relief="solid")
                         etapa+=1
-                    else:
-                        pass
-                
+                    elif etapa==4:
+                        self.label_petición.destroy()
+                        self.combo_box.destroy()
+                        boton_confirmación.destroy()
+                        self.nuevo_valor.destroy()
+                        label_informacion.config(text="Esperamos vuelvas pronto",borderwidth=2,relief="solid")
                 boton_confirmación.config(command=enviar)
             
             elif funcionalidad=="funcionalidad2":
